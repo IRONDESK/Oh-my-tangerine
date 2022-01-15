@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Feed from "../../components/Feed";
-import HeaderHome from "../../components/Home/HeaderHome";
+import Feed from "../../Components/Feed";
+import HeaderHome from "../../Components/Home/HeaderHome";
 import NavBottom from "./NavBottom";
 
 const Home = () => {
