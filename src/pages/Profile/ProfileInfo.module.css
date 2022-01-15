@@ -1,0 +1,72 @@
+.UserInfo {
+    display: flex;
+    flex-direction: column;
+}
+.InfoHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 40px;
+}
+.InfoFoot {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+
+.UserName{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+} 
+.followCont {
+    text-align: center;
+}
+#followersNum,
+#followingsNum {
+    display: block;
+    font-size: 18px;
+    line-height: 23px;
+    font-weight: 700;
+}
+.followTxt {
+    display: block;
+    font-size: 13px;
+    line-height: 16px;
+    color: #767676;
+    letter-spacing: -.5px;
+}
+.userImgCont {
+    width: 110px;
+    height: 110px;
+    border-radius: 100%;
+    border: 1px solid #DBDBDB;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.userImg {
+    width: 110px;
+    height: auto;
+}
+
+.UserName {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 20px;
+    margin: 6px 0;
+}
+.UserId {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    color: #767676;
+}
+.UserMsg {
+    display: block;
+    text-align: center;
+    margin: 16px 0;
+    color: #767676;
+    font-size: 15px;
+    line-height: 17px;
+}

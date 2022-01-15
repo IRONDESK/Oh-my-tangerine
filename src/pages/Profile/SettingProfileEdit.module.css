@@ -1,0 +1,51 @@
+.EditContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 35px;
+}
+.UserImgCont {
+    margin: 6px 0 22px;
+    text-align: center;
+}
+.UserImgInput {
+    display: none;
+}
+.UserImgInputBtn {
+    cursor: pointer;
+    position: relative;
+}
+.UserImgInputBtn:after {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    background-image: url('/public/image/icon/icon-upload.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #F26E22;
+    border-radius: 100%;
+}
+
+.ProfileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.ProfileForm label {
+    font-size: 14px;
+    line-height: 15px;
+    font-weight: 500;
+    color: #767676;
+}
+.ProfileForm input {
+    margin-bottom: 18px;
+    padding: 8px 1px;
+    border: none;
+    border-bottom: 1px solid #DBDBDB;
+}
+.ProfileForm input::placeholder {
+    color: #DBDBDB;
+}
