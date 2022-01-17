@@ -1,12 +1,44 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components';
 
 const InputChat = () => {
+  const InputRef = useRef(null);
+  const ButtonRef = useRef(null);
+  const formRef = useRef(null);
+
+  const onChangeInput = (e) => {
+    const input = InputRef.current;
+    const button = ButtonRef.current;
+    if (input.value) button.classList.add('on');
+    else button.classList.remove('on')
+  };
+
+  const onSubmitChat = (e) => {
+    const input = InputRef.current;
+    console.log(input.value);
+    if (!input.value) {
+      e.preventDefault();
+      alert('내용이 없습니다!');
+      return;
+    } else return;
+  };
+
   return (
-    <InputChatWrap>
+    <InputChatWrap ref={formRef} onSubmit={onSubmitChat}>
       <Avatar src='./image/basic-profile-img.png' />
-      <input type="text" placeholder='댓글 입력하기...' />
-      <SubmitButton type="submit">게시</SubmitButton>
+      <input
+        ref={InputRef}
+        type="text"
+        placeholder='댓글 입력하기...'
+        onChange={onChangeInput}
+      />
+      <SubmitButton
+        ref={ButtonRef}
+        type="submit"
+        onSubmit={onSubmitChat}
+      >
+        게시
+      </SubmitButton>
     </InputChatWrap>
   );
 };
@@ -16,6 +48,8 @@ const InputChatWrap = styled.form`
   height: 60.5px;
   padding: 13px 16px;
   position: fixed;
+  z-index: 20;
+  background: #FFFFFF;
   bottom: 0;
   display: flex;
   border-top: 1px solid ${(props) => props.theme.borderColor};
@@ -36,6 +70,9 @@ const SubmitButton = styled.button`
   color: #C4C4C4;
   &:last-child {
     margin-left: auto;
+  }
+  &.on {
+    color: #F26E22;
   }
 `;
 
