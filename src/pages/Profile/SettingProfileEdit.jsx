@@ -1,23 +1,49 @@
 import React, { useState } from "react";
-import styles from "./SettingProfileEdit.module.css";
+import styled from "styled-components";
 
+const SettingProfileEdit = () => {
+  const [imgSrc, setImgSrc] = useState([]);
+  const [previewImg, setPreviewImg] = useState([]);
 
+  if (previewImg.length == 0) {
+    setPreviewImg(['/image/basic-profile-img.png']);
+  }
+  // 이미지
+  const onLoadImage = (e) => {
+    const fileReader = new FileReader();
+    const imgTarget = e.target.files[0];
 
-const Profile = () => {
+    if (imgTarget) {
+      fileReader.readAsDataURL(imgTarget);
+      setImgSrc([imgTarget]);
+    }
+
+    fileReader.onloadend = () => {
+      const previewImgUrl = fileReader.result;
+      if (previewImgUrl) {
+        setPreviewImg([previewImgUrl]);
+      }
+    };
+  };
 
   return(
-    <section className={styles.EditContainer}>
-      <form action="" className={styles.ProfileForm}>
-          <div className={styles.UserImgCont}>
+    <EditContainer>
+      <ProfileForm action="">
+          <UserImgCont>
               <input
                 id="UserImgInput"
                 type="file"
-                className={styles.UserImgInput}
+                accept='img/*'
+                onChange={onLoadImage}
+                style={{ display:"none" }}
               />
-              <label htmlFor="UserImgInput" className={styles.UserImgInputBtn}>
-                <img src="/image/basic-profile-img.png" alt="프로필 이미지" />
-              </label>
-          </div>
+              <UserImgInputBtn htmlFor="UserImgInput">
+                <UserImgPreview
+                  src={previewImg[0]}
+                  alt="프로필 이미지"
+                />
+              </UserImgInputBtn>
+          </UserImgCont>
           <label htmlFor="UserNameInput">사용자 이름</label>
           <input
             type="text"
@@ -36,9 +62,64 @@ const Profile = () => {
             id="UserIntroInput"
             placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
           />
-        </form>
-    </section>
+        </ProfileForm>
+    </EditContainer>
   );
 };
 
-export default Profile;
+const EditContainer = styled.section`
+    display: flex;
+    flex-direction: column;
+    margin: 30px 35px;
+`;
+const ProfileForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    & label {
+    font-size: 14px;
+    line-height: 15px;
+    font-weight: 500;
+    color: #767676;
+    }
+    & input {
+    margin-bottom: 18px;
+    padding: 8px 1px;
+    border: none;
+    border-bottom: 1px solid #DBDBDB;
+    }
+    & input::placeholder {
+    color: #DBDBDB;
+    }
+`;
+const UserImgCont = styled.article`
+    margin: 6px 0 22px;
+    text-align: center;
+`;
+const UserImgPreview = styled.img`
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 100%;
+`;
+const UserImgInputBtn = styled.label`
+    cursor: pointer;
+    position: relative;
+    &:after {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    background-image: url('/image/icon/icon-upload.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #F26E22;
+    border-radius: 100%;
+    }
+`;
+
+
+export default SettingProfileEdit;

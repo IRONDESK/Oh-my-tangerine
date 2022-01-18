@@ -2,28 +2,29 @@ import React from "react";
 import styled from "styled-components";
 import UserInfo from "./UserInfo";
 
-const Feed = () => {
+const Feed = ({text, imgLink="./image/post-img-example.png", likeNum="0", chatNum="0", date="Date Loading"}) => {
   return (
     <Container>
       <UserInfo />
       <FeedContents>
         <FeedText>
+          {text}
           옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다.
           이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게
           뛰노는 인생의 힘있다.
         </FeedText>
-        <FeedImage src="./image/post-img-example.png" alt="피드 이미지" />
+        <FeedImage src={imgLink} alt="피드 이미지" />
         <FeedLikeAndChat>
           <LikeButton>
             <LikeImg src="./image/icon/icon-heart.png" alt="피드 이미지" />
-            <LikeCount>58</LikeCount>
+            <LikeCount>{likeNum}</LikeCount>
           </LikeButton>
           <ChatButton>
             <ChatImg src="./image/icon/icon-message-circle.png" alt="" />
-            <ChatCount>12</ChatCount>
+            <ChatCount>{chatNum}</ChatCount>
           </ChatButton>
         </FeedLikeAndChat>
-        <FeedDate>2020년 10월 21일</FeedDate>
+        <FeedDate>{date}</FeedDate>
       </FeedContents>
     </Container>
   );
@@ -46,6 +47,8 @@ const FeedText = styled.div`
 `;
 
 const FeedImage = styled.img`
+  width: 280px;
+  border-radius: 15px;
   margin-bottom: 12px;
   cursor: pointer;
 `;

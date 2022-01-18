@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./ProfileInfo.module.css";
 
-import UserBtnCircle from "./UserBtnCircle";
-import UserButton from "./UserButton";
+import UserBtnCircle from "../../Components/Profile/UserBtnCircle";
+import UserButton from "../../Components/Profile/UserButton";
 
 const ProfileInfo = ({userId="아이디", userName="이름", userMsg="test"}) => {
 
