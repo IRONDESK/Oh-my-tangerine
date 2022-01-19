@@ -9,6 +9,7 @@ import Profile from "./pages/Profile/Profile";
 import Setting from "./pages/Profile/Setting";
 import Post from "./pages/Post/Post";
 import Upload from "./pages/Upload/Upload";
+import Followers from "./pages/Followers/Followers";
 import Resistration from "./pages/Resistration/Resistration";
 
 class Routes extends React.Component {
@@ -24,6 +25,7 @@ class Routes extends React.Component {
           <Route exact path="/profile/setting" component={Setting} />
           <Route exact path="/post" component={Post} />
           <Route exact path="/Upload" component={Upload} />
+          <Route exact path="/Followers" component={Followers} />
           <Route exact path="/Resistration" component={Resistration} />
         </Switch>
       </Router>
