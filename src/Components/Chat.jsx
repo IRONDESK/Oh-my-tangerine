@@ -1,21 +1,21 @@
 import React from 'react'
 import styled from 'styled-components';
 
-const Chat = () => {
+const Chat = ({ avatar, name, time, content }) => {
   return (
     <ChatWarp>
       <UserInfoWrap>
         <UserInfo>
-          <Avatar src='./image/Ellipse 4.png' />
-          <Name>서귀포시 무슨 농장</Name>
-          <Time>5분 전</Time>
+          <Avatar src={avatar} />
+          <Name>{name}</Name>
+          <Time>{time}</Time>
         </UserInfo>
         <MoreButton>
           <img src="./image/icon/icon-more-vertical.png" alt="" />
         </MoreButton>
       </UserInfoWrap>
       <Content>
-        게시글 답글 ~~ !! 최고최고
+        {content}
       </Content>
     </ChatWarp>
   )

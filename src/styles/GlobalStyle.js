@@ -23,7 +23,7 @@ time, mark, audio, video {
 	text-decoration: none;
 	color: inherit;
 	vertical-align: baseline;
-	font-family: 'Pretendard';
+	font-family: 'Pretendard', 'Noto Sans KR', sans-serif;;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -82,6 +82,16 @@ a {
 input {
   outline: none;
   border: none;
+}
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  clip: rect(0,0,0,0);
 }
 
 `;
