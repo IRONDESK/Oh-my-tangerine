@@ -138,8 +138,8 @@ const Content = styled.div`
   .input-image-button {
     position: fixed;
     z-index: 20;
-    right: 16px;
-    bottom: 16px;
+    right: 25px;
+    bottom: 90px;
     display: inline-block;
     background: url('./image/upload-file.png');
     background-size: contain;

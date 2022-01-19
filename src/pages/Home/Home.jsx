@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Feed from "../../Components/Feed";
 import HeaderHome from "../../Components/Home/HeaderHome";
-import NavBottom from "./NavBottom";
+import NavBottom from "../../Components/NavBottom";
 
 const Home = () => {
   return (
@@ -14,14 +14,14 @@ const Home = () => {
         <Feed />
         <Feed />
       </FeedWrap>
-      <NavBottom />
+      <NavBottom place="home" />
     </>
   );
 };
 
 const FeedWrap = styled.section`
   height: 734px;
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 export default Home;
