@@ -14,7 +14,7 @@ const Header = ({ role, hasData }) => {
   return (
     <HeaderWrap>
       <PrevButton type="button">
-        <Img src="./image/icon/icon-arrow-left.png" alt="" />
+        <a href="./"><Img src="./image/icon/icon-arrow-left.png" alt="" /></a>
       </PrevButton>
       {
       hasData ?
@@ -26,14 +26,12 @@ const Header = ({ role, hasData }) => {
 };
 
 const HeaderWrap = styled.header`
-  position: fixed;
-  top:0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 48px;
-  padding: 8px 16px;
+  padding: 0 20px;
   border-bottom: 1px solid ${(props) => props.theme.borderColor};
 `;
 

@@ -2,7 +2,7 @@ import React from "react";
 import SettingProfileEdit from "./SettingProfileEdit";
 import NavBottom from "../../Components/NavBottom";
 
-import Header from "./Header";
+import Header from "../../Components/Profile/Header";
 
 const Profile = () => {
   return(

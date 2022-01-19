@@ -15,16 +15,13 @@ const Header = () => {
 };
 
 const HeaderWrap = styled.header`
-  position: fixed;
-  z-index: 10;
-  top:0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 48px;
-  padding: 12px;
+  padding: 0 20px;
   border-bottom: 1px solid ${(props) => props.theme.borderColor};
-  background: #FFFFFF;
 `;
 
 const PrevButton = styled.button`
