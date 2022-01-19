@@ -20,6 +20,7 @@ const UploadContent = ({ hasData }) => {
   const onLoadImage = (e)=> {
     const fileReader = new FileReader();
     const imgTarget = e.target.files[0];
+    console.log('imgTarget : ', imgTarget);
 
     if (imgTarget) {
       fileReader.readAsDataURL(imgTarget);
@@ -42,8 +43,6 @@ const UploadContent = ({ hasData }) => {
     setPreviewImg([...imgNameArr]);
 
     onImgNumberChange(imgSrc);
-    console.log(textareaRef.current.value);
-    console.log(imgSrc.length);
     if (textareaRef.current.value || imgSrc.length - 1) hasData(true);
     else hasData(false);
   }
@@ -74,7 +73,6 @@ const UploadContent = ({ hasData }) => {
   };
 
   const onImgNumberChange = (imgSrc) => {
-    console.log(imgAreaRef.current.classList);
     if (imgSrc.length >= 2) imgAreaRef.current.classList.add('multi');
     else imgAreaRef.current.classList.remove('multi');
   };

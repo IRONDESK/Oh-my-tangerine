@@ -16,6 +16,7 @@ const Header = () => {
 
 const HeaderWrap = styled.header`
   position: fixed;
+  z-index: 10;
   top:0;
   display: flex;
   justify-content: space-between;
@@ -23,6 +24,7 @@ const HeaderWrap = styled.header`
   height: 48px;
   padding: 12px;
   border-bottom: 1px solid ${(props) => props.theme.borderColor};
+  background: #FFFFFF;
 `;
 
 const PrevButton = styled.button`
