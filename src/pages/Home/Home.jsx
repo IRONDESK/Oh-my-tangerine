@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Feed from "../../Components/Feed";
 import HeaderHome from "../../Components/Home/HeaderHome";
 import NavBottom from "../../Components/NavBottom";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   // const [hasFeed, sethasFeed] = useState(true);
@@ -23,7 +24,11 @@ const Home = () => {
       <LogoContainer>
         <LogoImg src="./image/symbol-logo.png" alt="앱 로고" />
         <p>유저를 검색해 팔로우 해보세요!</p>
-        <button>검색하기</button>
+        <Link to="/search">
+          <button>
+            검색하기
+          </button>
+        </Link>
       </LogoContainer>
     );
   };

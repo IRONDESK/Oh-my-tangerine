@@ -12,6 +12,7 @@ import Post from "./pages/Post/Post";
 import Upload from "./pages/Upload/Upload";
 import Followers from "./pages/Followers/Followers";
 import Resistration from "./pages/Resistration/Resistration";
+import Search from "./pages/Search/Search";
 
 class Routes extends React.Component {
   render() {
@@ -26,9 +27,10 @@ class Routes extends React.Component {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/profile/setting" component={Setting} />
           <Route exact path="/post" component={Post} />
-          <Route exact path="/Upload" component={Upload} />
-          <Route exact path="/Followers" component={Followers} />
-          <Route exact path="/Resistration" component={Resistration} />
+          <Route exact path="/upload" component={Upload} />
+          <Route exact path="/followers" component={Followers} />
+          <Route exact path="/resistration" component={Resistration} />
+          <Route exact path="/search" component={Search} />
         </Switch>
       </Router>
     );
