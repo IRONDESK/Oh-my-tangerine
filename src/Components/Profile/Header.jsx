@@ -11,13 +11,13 @@ function Header({value, checkValue}) {
 }
 
 const HeadMenu = styled.header`
-    width: 100%;
-    height: 48px;
-    border-bottom: 1px solid #DBDBDB;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    height: 48px;
     padding: 0 20px;
+    border-bottom: 1px solid #DBDBDB;
 `;
 
 const BackButton = styled.a`
