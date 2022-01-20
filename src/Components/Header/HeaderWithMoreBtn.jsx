@@ -7,7 +7,7 @@ const Header = ({title = null}) => {
   return (
     <HeaderWrap>
       <LeftContainer>
-        <PrevButton onClick={ () => {history.goBack()} }>
+        <PrevButton type="button" onClick={ () => {history.goBack()} }>
           <Img src="/image/icon/icon-arrow-left.png" alt="뒤로가기" />
         </PrevButton>
         <PageTitle>
