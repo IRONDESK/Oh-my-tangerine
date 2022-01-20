@@ -16,7 +16,7 @@ const Header = ({ role, hasData }) => {
   return (
     <HeaderWrap>
       <PrevButton type="button" onClick={ () => {history.goBack()} }>
-        <a href="./"><Img src="./image/icon/icon-arrow-left.png" alt="" /></a>
+        <Img src="./image/icon/icon-arrow-left.png" alt="" />
       </PrevButton>
       {
       hasData ?

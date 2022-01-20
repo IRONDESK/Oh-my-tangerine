@@ -1,6 +1,6 @@
 import React from "react";
 
-import Header from "../../Components/Profile/Header";
+import Header from "../../Components/Header/HeaderWithMoreBtn";
 import ProfileInfo from "./ProfileInfo";
 import NavBottom from "../../Components/NavBottom";
 
