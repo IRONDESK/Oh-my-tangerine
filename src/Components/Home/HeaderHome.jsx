@@ -1,37 +1,52 @@
-import React from "react";
+import React from 'react';
 import styled from "styled-components";
+import { useHistory } from 'react-router-dom';
 
-const HeaderHome = () => {
+const Header = ({title = null}) => {
+  let history = useHistory();
   return (
-    <Container>
-      <div>감귤마켓 피드</div>
-      <img src="./image/icon/icon-search.png" alt="검색아이콘" />
-    </Container>
+    <HeaderWrap>
+      <LeftContainer>
+        <PageTitle>
+          { title ? title : !title }
+        </PageTitle>
+      </LeftContainer>
+      <SearchButton type="button">
+        <Img src="./image/icon/icon-search.png" alt="검색아이콘" />
+      </SearchButton>
+    </HeaderWrap>
   );
 };
 
-const Container = styled.header`
-  position: sticky;
+const HeaderWrap = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 0.5px solid #dbdbdb;
-  padding: 13px 21px 13px 16px;
-  background-color: #fff;
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  div {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 22px;
-  }
-
-  img {
-    cursor: pointer;
-  }
+  width: 100%;
+  height: 48px;
+  padding: 0 20px;
+  border-bottom: 1px solid ${(props) => props.theme.borderColor};
 `;
 
-export default HeaderHome;
+const LeftContainer = styled.article`
+  display: flex;
+  height: 22px;
+`;
+const PageTitle = styled.p`
+  height: 22px;
+  font-weight: 700;
+  line-height: 22px;
+`;
+
+const SearchButton = styled.button`
+  width: 24px;
+  height: 24px;
+`;
+
+const Img = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+`;
+
+export default Header;
