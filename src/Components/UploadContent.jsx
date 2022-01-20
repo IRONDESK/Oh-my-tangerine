@@ -109,7 +109,7 @@ const UploadContent = ({ hasData }) => {
 const UploadContentContainer = styled.section`
   display: flex;
   padding: 0 16px;
-  padding-top: 68px;
+  margin-top: 20px;
 `;
 
 const Avatar = styled.img`
@@ -156,8 +156,9 @@ const Content = styled.div`
       .img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
         border-radius: 10px;
-        bacground-size: contain;
+        background-size: contain;
         background-repeat: no-repeat;
       }
       .delete-button {

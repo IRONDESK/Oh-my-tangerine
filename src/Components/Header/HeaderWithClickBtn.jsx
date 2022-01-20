@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
+import { useHistory } from 'react-router-dom';
 
 const Header = ({ role, hasData }) => {
+  let history = useHistory();
   const onClickButton = (e) => {
     if (hasData) return;
     else {
@@ -13,7 +15,7 @@ const Header = ({ role, hasData }) => {
 
   return (
     <HeaderWrap>
-      <PrevButton type="button">
+      <PrevButton type="button" onClick={ () => {history.goBack()} }>
         <a href="./"><Img src="./image/icon/icon-arrow-left.png" alt="" /></a>
       </PrevButton>
       {
