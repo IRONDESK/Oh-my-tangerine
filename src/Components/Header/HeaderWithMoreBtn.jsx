@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from "styled-components";
+import { useHistory } from 'react-router-dom';
 
 const Header = ({title = null}) => {
+  let history = useHistory();
   return (
     <HeaderWrap>
       <LeftContainer>
-        <PrevButton>
-          <Img src="/image/icon/icon-arrow-left.png" alt="" />
+        <PrevButton onClick={ () => {history.goBack()} }>
+          <Img src="/image/icon/icon-arrow-left.png" alt="뒤로가기" />
         </PrevButton>
         <PageTitle>
           { title ? title : !title }
