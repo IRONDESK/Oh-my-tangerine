@@ -9,14 +9,12 @@ const Upload = () => {
   const [hasData, setHasData] = useState(false);
 
   return (
-    <div>
-    <UploadContainer encType='multipart/form-data'>
-      <Header role={'업로드'} hasData={hasData}/>
-      <UploadContent hasData={setHasData} />
-    </UploadContainer>
-    
-    <NavBottom place='upload' />
-    </div>
+    <>
+      <UploadContainer encType='multipart/form-data'>
+        <Header role={'업로드'} hasData={hasData}/>
+        <UploadContent hasData={setHasData} />
+      </UploadContainer>
+    </>
   );
 };
 

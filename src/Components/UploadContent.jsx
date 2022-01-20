@@ -109,7 +109,7 @@ const UploadContent = ({ hasData }) => {
 const UploadContentContainer = styled.section`
   display: flex;
   padding: 0 16px;
-  padding-top: 68px;
+  padding-top: 20px;
 `;
 
 const Avatar = styled.img`
@@ -138,8 +138,8 @@ const Content = styled.div`
   .input-image-button {
     position: fixed;
     z-index: 20;
-    right: 25px;
-    bottom: 90px;
+    right: 16px;
+    bottom: 16px;
     display: inline-block;
     background: url('./image/upload-file.png');
     background-size: contain;
