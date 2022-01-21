@@ -2,6 +2,43 @@ import React from 'react'
 import styled from 'styled-components';
 
 const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matchedText }) => {
+  const prevText = name.slice(0, name.indexOf(matchedText));
+  const nextText = name.slice(name.indexOf(matchedText) + matchedText.length, name.length);
+
+  const showPrevText = (prevText) => {
+    if (prevText[prevText.length - 1] === ' ') {
+      return (
+        <>
+          {prevText.slice(0, name.indexOf(matchedText) - 1)}
+          <>&nbsp;</>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {prevText}
+        </>
+      )
+    }
+  }
+
+  const showNextText = (nextText) => {
+    if (nextText[0] === ' ') {
+      return (
+        <>
+          <>&nbsp;</>
+          {nextText.slice(1)}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {nextText}
+        </>
+      )
+    }
+  }
+
   return (
     <UserInfoWrap>
       <ProfileWrap>
@@ -10,9 +47,9 @@ const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matched
         </Avatar>
         <Info>
           <Name>
-            {name.slice(0, name.indexOf(matchedText))}
+            {showPrevText(prevText)}
             <strong>{matchedText}</strong>
-            {name.slice(name.indexOf(matchedText) + matchedText.length, name.length)}
+            {showNextText(nextText)}
           </Name>
           <Email>{email}</Email>
         </Info>
