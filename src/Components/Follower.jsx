@@ -71,7 +71,7 @@ const FollowButton = styled.button`
   font-size: 12px;
   line-height: 15px;
   color: #FFFFFF;
-  width: 56px;
+  width: 58px;
   height: 28px;
   .off {
     background: #FFFFFF;
@@ -85,7 +85,7 @@ const CancelButton = styled.button`
   padding: 7px 11px;
   font-size: 12px;
   line-height: 15px;
-  width: 56px;
+  width: 58px;
   height: 28px;
   background: #FFFFFF;
   border: 1px solid #DBDBDB;

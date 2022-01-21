@@ -5,7 +5,6 @@ import Header from "../../Components/Header/HeaderWithMoreBtn";
 import ProfileInfo from "../../Components/Profile/ProfileInfo";
 import NowSales from "../../Components/Profile/NowSales";
 import Feed from "../../Components/Feed";
-
 import NavBottom from "../../Components/NavBottom";
 
 const Profile = () => {

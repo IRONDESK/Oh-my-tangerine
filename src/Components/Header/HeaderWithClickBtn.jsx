@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
+import { useHistory } from 'react-router-dom';
 
 const Header = ({ role, hasData }) => {
+  let history = useHistory();
   const onClickButton = (e) => {
     if (hasData) return;
     else {
@@ -13,7 +15,7 @@ const Header = ({ role, hasData }) => {
 
   return (
     <HeaderWrap>
-      <PrevButton type="button">
+      <PrevButton type="button" onClick={ () => {history.goBack()} }>
         <Img src="./image/icon/icon-arrow-left.png" alt="" />
       </PrevButton>
       {
@@ -26,14 +28,12 @@ const Header = ({ role, hasData }) => {
 };
 
 const HeaderWrap = styled.header`
-  position: fixed;
-  top:0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 48px;
-  padding: 8px 16px;
+  padding: 0 20px;
   border-bottom: 1px solid ${(props) => props.theme.borderColor};
 `;
 
