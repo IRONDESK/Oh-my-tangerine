@@ -29,9 +29,6 @@ const Post = () => {
 };
 
 const PostContainer = styled.ul`
-  section {
-    margin-top: 48px;
-  }
 `;
 
 const ChatList = styled.ul`

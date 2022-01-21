@@ -120,7 +120,6 @@ const Resistration = () => {
 
 const ResistrationContainer = styled.form`
   fieldset {
-    margin-top: 48px;
     padding: 30px 34px;
     .목록 {
       > label {
