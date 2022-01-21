@@ -3,8 +3,6 @@ import styled from "styled-components";
 import Header from "../../Components/Header/HeaderWithClickBtn";
 import UploadContent from "../../Components/UploadContent";
 
-import NavBottom from "../../Components/NavBottom";
-
 const Upload = () => {
   const [hasData, setHasData] = useState(false);
 

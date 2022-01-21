@@ -2,8 +2,13 @@ import React from 'react';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 
-const HeaderSearch = () => {
+const HeaderSearch = ({ text }) => {
   let history = useHistory();
+
+  const onChangeText = (e) => {
+    text(e.target.value);
+  };
+
   return (
     <HeaderWrap>
       <LeftContainer>
@@ -11,7 +16,7 @@ const HeaderSearch = () => {
           <Img src="/image/icon/icon-arrow-left.png" alt="뒤로가기" />
         </PrevButton>
       </LeftContainer>
-      <SearchInput type="text" placeholder='계정 검색' />
+      <SearchInput type="text" placeholder='계정 검색' onChange={onChangeText}/>
     </HeaderWrap>
   );
 };
