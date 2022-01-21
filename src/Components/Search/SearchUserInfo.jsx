@@ -9,7 +9,11 @@ const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matched
           <Img src={avatar} alt="" />
         </Avatar>
         <Info>
-          <Name>{name}</Name>
+          <Name>
+            {name.slice(0, name.indexOf(matchedText))}
+            <strong>{matchedText}</strong>
+            {name.slice(name.indexOf(matchedText) + matchedText.length, name.length)}
+          </Name>
           <Email>{email}</Email>
         </Info>
       </ProfileWrap>
@@ -49,6 +53,9 @@ const Name = styled.div`
   height: 50%;
   font-weight: 700;
   font-size: 14px;
+  strong {
+    color: #F26E22;
+  }
   `;
   
   const Email = styled.div`
