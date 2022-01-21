@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import NavBottom from '../../Components/NavBottom';
 import Follower from '../../Components/Follower';
+import Header from '../../Components/Header/HeaderFollowers';
 
 const Followers = () => {
+  let history = useHistory();
   return (
     <Container>
-      <header className='followers-header'>
-        <button className='prev-button'>
-          <img src="./image/icon/icon-arrow-left.png" alt="" />
-        </button>
-        <div className='header-name'>Followers</div>
-      </header>
+      <Header title={'Followers'}></Header>
       <ul className='followers-list'>
         <Follower
           imgLink={'./image/Ellipse 1.png'}
@@ -63,35 +60,7 @@ const Followers = () => {
 }
 
 const Container = styled.section`
-  .followers-header {
-    position: fixed;
-    top:0;
-    z-index: 10;
-    background-color: #FFFFFF;
-    display: flex;
-    width: 100%;
-    height: 48px;
-    padding: 12px;
-    border-bottom: 1px solid ${(props) => props.theme.borderColor};
-    .prev-button {
-      width: 22px;
-      height: 22px;
-      img {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .header-name {
-      position: absolute;
-      top: 14.5px;
-      left: 40px;
-      font-size: 14px;
-      line-height: 18px;
-    }
-  }
   .followers-list {
-    margin-top: 48px;
     padding: 24px 16px;
   }
 `;

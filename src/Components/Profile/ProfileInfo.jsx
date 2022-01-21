@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
-
+import { Link } from 'react-router-dom';
 import UserBtnCircle from "../../Components/Profile/UserBtnCircle";
 import UserButton from "../../Components/Profile/UserButton";
 
@@ -15,10 +15,12 @@ function ProfileInfo ({userName="애월읍 위니브 감귤농장", userId="weni
     return (
     <UserInfoContainer>
         <HeadWrap>
-            <FollowAmoutWrap 
-                amount = "2950"
-                type = "Followers"
-            />
+            <Link to="/followers">
+                <FollowAmoutWrap 
+                    amount = "2950"
+                    type = "Followers"
+                />
+            </Link>
             <ProfileImgWrap>
                 <ProfileImg src="/image/basic-profile-img.png" alt="프로필 이미지" />
             </ProfileImgWrap>

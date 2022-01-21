@@ -2,21 +2,18 @@ import React from 'react';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 
-const HeaderSearch = ({ text }) => {
+const Header = ({title = null}) => {
   let history = useHistory();
-
-  const onChangeText = (e) => {
-    text(e.target.value);
-  };
-
   return (
     <HeaderWrap>
       <LeftContainer>
-        <PrevButton onClick={ () => {history.goBack()} }>
+        <PrevButton type="button" onClick={ () => {history.goBack()} }>
           <Img src="/image/icon/icon-arrow-left.png" alt="뒤로가기" />
         </PrevButton>
+        <PageTitle>
+          { title ? title : !title }
+        </PageTitle>
       </LeftContainer>
-      <SearchInput type="text" placeholder='계정 검색' onChange={onChangeText}/>
     </HeaderWrap>
   );
 };
@@ -39,6 +36,17 @@ const PrevButton = styled.button`
   width: 22px;
   height: 22px;
 `;
+const PageTitle = styled.p`
+  height: 22px;
+  font-weight: 700;
+  line-height: 22px;
+  margin-left: 11px;
+`;
+
+const MoreButton = styled.button`
+  width: 24px;
+  height: 24px;
+`;
 
 const Img = styled.img`
   display: block;
@@ -46,17 +54,4 @@ const Img = styled.img`
   height: 100%;
 `;
 
-const SearchInput = styled.input`
-  width: 316px;
-  height: 32px;
-  background: #F2F2F2;
-  border-radius: 32px;
-  padding: 7px 16px;
-  &::placeholder {
-    font-size: 14px;
-    line-height: 18px;
-    color: #C4C4C4;
-  }
-`;
-
-export default HeaderSearch;
+export default Header;
