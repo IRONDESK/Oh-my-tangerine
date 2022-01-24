@@ -18,6 +18,7 @@ const Search = () => {
     const result = userList.map((user, i) => {
       if (user.name.includes(typedText)) return (
         <UserInfo
+          key={user.name}
           matchedText={typedText}
           avatar={user.avatar}
           name={user.name}
