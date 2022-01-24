@@ -1,0 +1,84 @@
+.title {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin: 54px 34px 40px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.EditContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 35px;
+}
+
+.UserImgCont {
+  margin: 6px 0 22px;
+  text-align: center;
+}
+
+.UserImgInput {
+  display: none;
+}
+
+.UserImgInputBtn {
+  position: relative;
+  cursor: pointer;
+}
+
+.UserImgInputBtn:after {
+  position: absolute;
+  display: block;
+  content: '';
+  bottom: 0;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  background-image: url('/public/image/icon/icon-upload.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #F26E22;
+  border-radius: 100%;
+}
+
+.ProfileForm {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ProfileForm label {
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 500;
+  color: #767676;
+}
+
+.ProfileForm input {
+  margin-bottom: 16px;
+  padding: 8px 1px;
+  border: none;
+  border-bottom: 1px solid #DBDBDB;
+}
+
+.ProfileForm input::placeholder {
+  font-family: Spoqa Han Sans Neo;
+  color: #DBDBDB;
+}
+
+.btn {
+  position: absolute; 
+  align-items: center;
+  background: #FFC7A7;
+  text-align: center;
+  padding: 13px 0;
+  line-height: 18px;
+  width: 322px;
+  height: 44px;
+  border-radius: 44px;
+  margin-top: 50px;
+  font-family: Spoqa Han Sans Neo;
+  font-size: 14px 400;
+  color: white;
+}
