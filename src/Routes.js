@@ -13,6 +13,8 @@ import Upload from "./pages/Upload/Upload";
 import Followers from "./pages/Followers/Followers";
 import Resistration from "./pages/Resistration/Resistration";
 import Search from "./pages/Search/Search";
+import LoginEmail from "./pages/Login/LoginEmail";
+import LoginMembership from "./pages/Login/LoginMembership";
 
 class Routes extends React.Component {
   render() {
@@ -31,6 +33,8 @@ class Routes extends React.Component {
           <Route exact path="/followers" component={Followers} />
           <Route exact path="/resistration" component={Resistration} />
           <Route exact path="/search" component={Search} />
+          <Route exact path="/login/email" component={LoginEmail} />
+          <Route exact path="/login/membership" component={LoginMembership} />
         </Switch>
       </Router>
     );
