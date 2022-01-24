@@ -86,10 +86,3 @@
   color: #767676;
   bottom: 200px;
 }
-
-button img {
-  position: absolute;
-  align-items: center;
-  /* justify-content: center; */
-  left: 13px;
-}

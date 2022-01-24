@@ -13,12 +13,12 @@ const Login = () => {
       <div className={styles.loginbox}>
         
           <button type="button" className={styles.btnKa}>
-            <img src="./image/message-circle.png" alt=""/>
+            <SnsImage className="sns-image" src="./image/message-circle.png" alt=""/>
             카카오톡 계정으로 로그인
           </button>
           
-          <button type="button" className={styles.btnGo}><img src="./image/google.png" alt=""/>구글 계정으로 로그인</button>
-          <button type="button" className={styles.btnFa}><img src="./image/facebook.png" alt=""/>페이스북 계정으로 로그인</button>
+          <button type="button" className={styles.btnGo}><SnsImage className="sns-image" src="./image/google.png" alt=""/>구글 계정으로 로그인</button>
+          <button type="button" className={styles.btnFa}><SnsImage className="sns-image" src="./image/facebook.png" alt=""/>페이스북 계정으로 로그인</button>
           {/* <button onClick={sayFacebook} name="나는 페이스북 버튼" id="나는 페이스북 아이디">페이스북</button> */}
           
         <div className={styles.link}>
@@ -38,6 +38,13 @@ const MainWrap = styled.main`
   left: 0;
   right: 0;
   background-color: ${(props) => props.theme.mainColor};
+`;
+
+const SnsImage = styled.img`
+  position: absolute;
+  align-items: center;
+  /* justify-content: center; */
+  left: 13px;
 `;
 
 export default Login;
