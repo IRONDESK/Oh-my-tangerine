@@ -64,6 +64,7 @@ const UserInfoWrap = styled.li`
   height: 42px;
   justify-content: space-between;
   margin-bottom: 12px;
+  cursor: pointer;
 `;
 
 const ProfileWrap = styled.div`
@@ -74,9 +75,10 @@ const Avatar = styled.a`
   width: 42px;
   height: 42px;
   margin-right: 12px;
-`;
-
-const Img = styled.img`
+  `;
+  
+  const Img = styled.img`
+  border-radius: 50%;
   width: 100%;
   height: 100%;
 `;
