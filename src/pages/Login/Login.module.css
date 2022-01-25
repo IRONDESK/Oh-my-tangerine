@@ -65,24 +65,25 @@
 
 .eLogin {
   left: 100px;
-  font-family: Spoqa Han Sans Neo;
+  bottom: 180px;
 }
 
-.eJoin::after {
-  border-right: 1px solid #C4C4C4;
+.eJoin::before {
   height: 10px;
+  position: relative;
+  content: '|';
+  margin: 0 12px;
 }
 
 .eJoin {
   right: 100px;
 }
 
-:link {
+.link {
   font-family: Spoqa Han Sans Neo;
   font-size: 12px;
   font-weight: 400;
   line-height: 15px;
   text-align: left;
   color: #767676;
-  bottom: 200px;
 }

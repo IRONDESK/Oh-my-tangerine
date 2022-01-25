@@ -2,9 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./pages/Login/Login";
+import LoginEmail from "./pages/Login/LoginEmail"; 
+import LoginMembership from "./pages/Login/LoginMembership"; 
+import LoginProfile from "./pages/Login/LoginProfile";
 import Home from "./pages/Home/Home";
 import Chat from "./pages/Chat/Chat";
-import ChatRoom from "./pages/Chat/ChatRoom";
 import Modification from "./pages/Modification/Modification";
 import Profile from "./pages/Profile/Profile";
 import Setting from "./pages/Profile/Setting";
@@ -16,12 +18,17 @@ import Search from "./pages/Search/Search";
 import LoginEmail from "./pages/Login/LoginEmail";
 import LoginMembership from "./pages/Login/LoginMembership";
 
+
 class Routes extends React.Component {
   render() {
     return (
       <Router>
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route exact path="/login/email" component={LoginEmail} />
+          <Route exact path="/login/membership" component={LoginMembership} />
+          <Route exact path="/login/profile" component={LoginProfile} />
+            
           <Route exact path="/home" component={Home} />
           <Route exact path="/chat" component={Chat} />
             <Route exact path="/chat/:id" component={ChatRoom} />
@@ -35,6 +42,7 @@ class Routes extends React.Component {
           <Route exact path="/search" component={Search} />
           <Route exact path="/login/email" component={LoginEmail} />
           <Route exact path="/login/membership" component={LoginMembership} />
+            
         </Switch>
       </Router>
     );

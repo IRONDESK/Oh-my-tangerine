@@ -62,23 +62,29 @@
   border-bottom: 1px solid #DBDBDB;
 }
 
+.ProfileForm input:focus {
+  margin-bottom: 16px;
+  padding: 8px 1px;
+  border: none;
+  border-bottom: 1px solid #F26E22;
+}
+
 .ProfileForm input::placeholder {
   font-family: Spoqa Han Sans Neo;
   color: #DBDBDB;
 }
 
 .btn {
-  position: absolute; 
-  align-items: center;
-  background: #FFC7A7;
   text-align: center;
-  padding: 13px 0;
+  position: absolute; 
   line-height: 18px;
   width: 322px;
   height: 44px;
+  top: 508px;
   border-radius: 44px;
-  margin-top: 50px;
+  font-size: 14px;
+  font-weight: 500;
   font-family: Spoqa Han Sans Neo;
-  font-size: 14px 400;
   color: white;
+  background: #FFC7A7;
 }
