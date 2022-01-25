@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import axios from "axios";
 import store from "../../Store";
@@ -19,10 +19,12 @@ const LoginEmail = () => {
     axios.post('http://146.56.183.55:5050/user/login', data)
       .then(res => {
         console.log('결과', res);
-        store.setLocalStorage(res.data.user);
+        
         if (res.data.user == undefined) {
           alert(res.data.message);
-        }
+        } else {
+          store.setLocalStorage(res.data.user);
+        };
       })
       .catch(err => {
         console.log('에러', err);
