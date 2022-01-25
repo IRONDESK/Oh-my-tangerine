@@ -6,6 +6,7 @@ import axios from "axios";
 import store from "../../Store";
 import styles from "./LoginEmail.module.css";
 
+
 const LoginEmail = () => {
   function getLogin(e) {
     e.preventDefault();
@@ -15,7 +16,7 @@ const LoginEmail = () => {
       "password" : e.target.pwd.value
       }
     };
-
+    
     axios.post('http://146.56.183.55:5050/user/login', data)
       .then(res => {
         console.log('결과', res);

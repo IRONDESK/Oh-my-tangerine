@@ -21,8 +21,8 @@
   .joinForm label {
     margin-top: 1px;
     font-size: 12px;
-    line-height: 12px;
     font-weight: 500;
+    line-height: 12px;
     color: #767676;
   }
   
@@ -32,7 +32,15 @@
     border: none;
     border-bottom: 1px solid #DBDBDB;
   }
-  
+
+  .joinForm input:focus {
+    margin-bottom: 16px;
+    padding: 8px 1px;
+    border: none;
+    border-bottom: 1px solid #F26E22;
+  }
+
+
   .joinForm input::placeholder {
     font-family: Spoqa Han Sans Neo;
     color: #DBDBDB;
@@ -43,21 +51,23 @@
     line-height: 18px;
     width: 322px;
     height: 44px;
-    margin-top: 150px;
+    top: 280px;
     border-radius: 44px;
     font-size: 14px;
     font-weight: 500;
     font-family: Spoqa Han Sans Neo;
     color: white;
     background: #FFC7A7;
-  } 
+  }  
   
-  :Link {
-    font-family: Spoqa Han Sans Neo;
+  .joinLink {
+    display: block;
+    position: absolute;
     font-size: 12px;
     font-weight: 400;
-    line-height: 15px;
+    line-height: 20px;
     text-align: center;
     color: #767676;
-    bottom: 20px;
+    top: 350px;
+    left: 150px;
   }
