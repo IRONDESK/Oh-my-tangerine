@@ -7,6 +7,7 @@ import store from "../../Store";
 import axios from 'axios';
 
 function ProfileInfo ({ accountname }) {
+    const user = store.getLocalStorage().accountname;
     const [followCheck, setFollowCheck] = useState(false);
     const [followers, setFollowers] = useState(2950);
     const [followings, setFollowings] = useState(128);
@@ -106,14 +107,32 @@ function ProfileInfo ({ accountname }) {
         <UserMsg>{msg}</UserMsg>
 
         <FooterWrap>
-            <UserBtnCircle value="chat" />
-            <UserButton
-                text={followCheck ? "언팔로우" : "팔로우"}
-                onClick={followButton}
-                checkValue={followCheck}
-                type='button'
-            />
-            <UserBtnCircle value="share" />
+            {user === accountname ? 
+                <>
+                    <Link to='/setting'>
+                        <UserButton
+                            text='프로필 수정'
+                            type='button'
+                            />
+                    </Link>
+                    <Link to='/registration'>
+                        <UserButton
+                            text='상품 등록'
+                            type='button'
+                            />
+                    </Link>
+                </> : 
+                <>
+                    <UserBtnCircle value="chat" />
+                    <UserButton
+                        text={followCheck ? "언팔로우" : "팔로우"}
+                        onClick={followButton}
+                        checkValue={followCheck}
+                        type='button'
+                    />
+                    <UserBtnCircle value="share" />
+                </>
+            }
         </FooterWrap>
     </UserInfoContainer>
   );
