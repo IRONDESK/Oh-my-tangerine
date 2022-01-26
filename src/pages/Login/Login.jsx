@@ -1,45 +1,102 @@
 import React from "react";
 import styled from "styled-components";
-import {Link} from 'react-router-dom';
-import styles from "./Login.module.css";
+import { Link } from 'react-router-dom';
 
-
-const Login = () => {
-
+function Login() {
   return (
-
     <MainWrap>
-      <img className={styles.logo} src="./image/symbol-logo-W.png" alt=""/>
-      <div className={styles.loginbox}>
+      <LogoImg src="./image/symbol-logo-W.png" alt="감귤마켓 로고"/>
+      <LoginBox>
         
-          <button type="button" className={styles.btnKa}>
-            <SnsImage className="sns-image" src="./image/message-circle.png" alt=""/>
+          <ButtonSns
+            type="button"
+            snsValue = "kakao">
+            <SnsImage
+              src="./image/message-circle.png"
+              alt="카카오톡 계정으로 로그인"/>
             카카오톡 계정으로 로그인
-          </button>
+          </ButtonSns>
   
-          <button type="button" className={styles.btnGo}><SnsImage className="sns-image" src="./image/google.png" alt=""/>구글 계정으로 로그인</button>
-          <button type="button" className={styles.btnFa}><SnsImage className="sns-image" src="./image/facebook.png" alt=""/>페이스북 계정으로 로그인</button>
-          {/* <button onClick={sayFacebook} name="나는 페이스북 버튼" id="나는 페이스북 아이디">페이스북</button> */}
+          <ButtonSns
+            type="button"
+            snsValue = "google">
+            <SnsImage
+              src="./image/google.png"
+              alt="구글 계정으로 로그인"/>
+              구글 계정으로 로그인
+          </ButtonSns>
+
+          <ButtonSns
+            type="button"
+            snsValue = "facebook">
+            <SnsImage
+              src="./image/facebook.png"
+              alt="페이스북 계정으로 로그인"/>
+              페이스북 계정으로 로그인
+          </ButtonSns>
+
           
-        <div className={styles.link}>
-          <Link className={styles.eLogin} to="/login/email">이메일로 로그인</Link>
-          <Link className={styles.eJoin} to="/login/membership">회원가입</Link>
-        </div>
-      </div>
+        <OptionWrap>
+          <StyledLink to="/login/email">
+            이메일로 로그인
+          </StyledLink>
+          <StyledLink to="/login/membership">
+            회원가입
+          </StyledLink>
+        </OptionWrap>
+      </LoginBox>
       </MainWrap>
   );
 };
 
 const MainWrap = styled.main`
   ${(props) => props.theme.setFlex("center", "center", "column")};
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: 100%;
   background-color: ${(props) => props.theme.mainColor};
 `;
+const LogoImg = styled.img`
+  transform: translateY(-50%);
+`;
+const LoginBox = styled.section`
+  ${(props) => props.theme.setFlex("flex-start", "center", "column")};
+  position: absolute;
+  gap: 10px;
+  height: 320px;
+  bottom: 0;
+  padding: 50px 34px 0 34px;
+  border-radius: 20px 20px 0px 0px;
+  background: #fff;
+`;
 
+const ButtonSns = styled.button`
+  position: relative; 
+  border: ${(props) =>
+    ( props.snsValue == "kakao" ?
+      "1px solid #F2C94C" :
+      (props.snsValue == "facebook" ? 
+      "1px solid #2D9CDB" :
+      "1px solid #767676")
+    )};
+  padding: 13px 0;
+  line-height: 18px;
+  width: 322px;
+  height: 44px;
+  border-radius: 44px;
+  font-family: 'Pretendard';
+  color: #5a5a5a;
+  font-size: 14px 400;
+`;
+const StyledLink = styled(Link)`
+  &:last-child::before {
+    content: '|';
+    padding: 0 7px;
+  };
+`;
+const OptionWrap = styled.section`
+  margin: 8px 0;
+  font-size: 13px;
+  color: #767676;
+`;
 const SnsImage = styled.img`
   position: absolute;
   left: 13px;

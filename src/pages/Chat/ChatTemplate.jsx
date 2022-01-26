@@ -32,7 +32,7 @@ const ChatWithImgStatus = styled.div`
     position: relative;
     &::before {
     content: '';
-    display: ${(props) => (props.status === true ? "block" : "none" )};
+    display: ${(props) => (props.chatStatus === true ? "block" : "none" )};
     position: absolute;
     top: 0;
     left: 0;
