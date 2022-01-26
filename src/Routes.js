@@ -7,6 +7,7 @@ import LoginMembership from "./pages/Login/LoginMembership";
 import LoginProfile from "./pages/Login/LoginProfile";
 import Home from "./pages/Home/Home";
 import Chat from "./pages/Chat/Chat";
+import ChatRoom from "./pages/Chat/ChatRoom";
 import Modification from "./pages/Modification/Modification";
 import Profile from "./pages/Profile/Profile";
 import Setting from "./pages/Profile/Setting";
@@ -15,8 +16,6 @@ import Upload from "./pages/Upload/Upload";
 import Followers from "./pages/Followers/Followers";
 import Resistration from "./pages/Resistration/Resistration";
 import Search from "./pages/Search/Search";
-import LoginEmail from "./pages/Login/LoginEmail";
-import LoginMembership from "./pages/Login/LoginMembership";
 
 
 class Routes extends React.Component {
