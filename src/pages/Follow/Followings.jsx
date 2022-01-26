@@ -8,6 +8,7 @@ import store from "../../Store";
 import axios from 'axios';
 
 const Followings = ({ location }) => {
+  const user = store.getLocalStorage().accountname;
   const accountname = location.state.accountname;
   let history = useHistory();
   const [followerList, setFollowerList] = useState([]);
@@ -38,7 +39,7 @@ const Followings = ({ location }) => {
       <ul className='followers-list'>
         {followerList.map((follower) => (
           <Follower
-            key={Math.random() * 100}
+            key={follower.accountname}
             imgLink={follower.image}
             name={follower.username}
             intro={follower.intro}
@@ -47,7 +48,7 @@ const Followings = ({ location }) => {
           />
         ))}
       </ul>
-      <NavBottom />
+      { user === accountname ? <NavBottom place='profile'/> : <NavBottom place='home'/> }
     </Container>
   )
 }

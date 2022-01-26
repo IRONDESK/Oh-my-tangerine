@@ -26,7 +26,7 @@ const Profile = ({ location }) => {
           <Feed />
         </FeedWrap>
       </MainContainer>
-      <NavBottom place="profile"/>
+      { location.state ? <NavBottom place="home"/> : <NavBottom place="profile"/> }
     </div>
   );
 };
