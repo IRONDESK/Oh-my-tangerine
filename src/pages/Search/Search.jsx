@@ -32,7 +32,8 @@ const Search = () => {
               matchedText={typedText}
               avatar={image}
               name={username}
-              email={`@ ${accountname}`}
+              email={accountname}
+              test={user}
             />
           );
         });
