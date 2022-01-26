@@ -1,54 +1,63 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import HeaderSearch from "../../Components/Header/HeaderWithSearch";
 import NavBottom from "../../Components/NavBottom";
 import UserInfo from "../../Components/Search/SearchUserInfo";
-
-const userList = [
-  { name: "애월읍 위니브 감귤농장", email: "@ weniv_Mandarin", avatar: undefined },
-  { name: "애월읍 한라봉 최고 맛집", email: "@ hanlabong", avatar: "./image/Ellipse 1 (7).png" },
-  { name: "감귤의 품격 - 애월읍", email: "@ mandarin_king", avatar: "./image/Ellipse 1 (8).png" },
-];
+import store from "../../Store";
 
 const Search = () => {
+  const url = 'http://146.56.183.55:5050';
+  const token = store.getLocalStorage().token;
   const [text, setText] = useState('');
+  const [datas, setDatas] = useState('');
 
   const filterUser = (typedText) => {
-    if (!typedText) return;
-    const result = userList.map((user, i) => {
-      if (user.name.includes(typedText)) return (
-        <UserInfo
-          key={user.name}
-          matchedText={typedText}
-          avatar={user.avatar}
-          name={user.name}
-          email={user.email}
-        />
-      );
-    });
-    return result;
+    if (!typedText) {
+      return;
+    }
+    axios.get(`${url}/user/searchuser/?keyword=${text}`, {
+      headers: {
+        "Authorization" : `Bearer ${token}`,
+        "Content-type" : 'application/json',
+      },
+    })
+      .then((res) => {
+        const datas = res.data;
+        const result = datas.map((user, i) => {
+          const { accountname, image, username } = user;
+          return (
+            <UserInfo
+              key={username}
+              matchedText={typedText}
+              avatar={image}
+              name={username}
+              email={`@ ${accountname}`}
+            />
+          );
+        });
+        setDatas(result);
+        return result;
+      })
+      .catch(err => {
+        console.log('에러', err);
+      })
   }
+
+  useEffect(() => {
+    if (!text) setDatas(null);
+    filterUser(text);
+    return () => {
+
+    }
+  }, [text]);
 
   return (
     <Container>
       <HeaderSearch text={setText} />
       <UserList>
-        {filterUser(text)}
-        {/* <UserInfo
-          avatar={undefined}
-          name="애월읍 위니브 감귤농장"
-          email="@ weniv_Mandarin"
-        />
-        <UserInfo
-          avatar="./image/Ellipse 1 (7).png"
-          name="애월읍 한라봉 최고 맛집"
-          email="@ hanlabong"
-        />
-        <UserInfo
-          avatar="./image/Ellipse 1 (8).png"
-          name="감귤의 품격 - 애월읍"
-          email="@ mandarin_king"
-        /> */}
+        {/* {filterUser(text)} */}
+        {datas ? datas : null}
       </UserList>
       <NavBottom place='home'/>
     </Container>
