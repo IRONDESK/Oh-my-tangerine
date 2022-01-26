@@ -1,39 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserBtnCircle from "../../Components/Profile/UserBtnCircle";
 import UserButton from "../../Components/Profile/UserButton";
+import store from "../../Store";
+import axios from 'axios';
 
-function ProfileInfo ({userName="애월읍 위니브 감귤농장", userId="weniv_Mandarin", userMsg="애월읍 감귤 전국 배송, 귤따기 체험, 감귤 농장"}) {
-    const [followCheck, setFollowCheck] = useState(false)
+function ProfileInfo ({ accountname }) {
+    const [followCheck, setFollowCheck] = useState(false);
+    const [followers, setFollowers] = useState(2950);
+    const [followings, setFollowings] = useState(128);
+    const [name, setName] = useState('애월읍 위니브 감귤농장');
+    const [id, setId] = useState(accountname);
+    const [msg, setMsg] = useState('대한민국 감귤 전국 배송, 귤따기 체험, 감귤 농장');
+    const [imgUrl, setImgUrl] = useState('/image/basic-profile-img.png');
+
+    async function getProfileInfo() {
+        const url = 'http://146.56.183.55:5050';
+        const token = store.getLocalStorage().token;
+        const response = await axios.get(`${url}/profile/${accountname}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-type': 'application/json',
+            },
+        });
+        setFollowers(response.data.profile.followerCount);
+        setFollowings(response.data.profile.followingCount);
+        setName(response.data.profile.username);
+        setId(response.data.profile.accountname);
+        setMsg(response.data.profile.intro);
+        setImgUrl(response.data.profile.image);
+    }
+
     const followButton = (e) => {
         e.preventDefault();
         alert("팔로우 상태 변경");
         setFollowCheck(!followCheck);
     };
 
+    useEffect(() => {
+        getProfileInfo();
+    }, [accountname]);
+
     return (
     <UserInfoContainer>
         <HeadWrap>
-            <Link to="/followers">
-                <FollowAmoutWrap 
-                    amount = "2950"
+            <Link to={{
+                pathname: `/followers/${accountname}`,
+                state: {
+                    accountname: accountname,
+                },
+            }}>
+                <FollowAmoutWrap
+                    amount = {followers}
                     type = "Followers"
                 />
             </Link>
             <ProfileImgWrap>
-                <ProfileImg src="/image/basic-profile-img.png" alt="프로필 이미지" />
+                <ProfileImg src={imgUrl} alt="프로필 이미지" />
             </ProfileImgWrap>
-            <FollowAmoutWrap 
-                amount = "128"
-                type = "Followings"
-            />
+            <Link to="/followers">
+                <FollowAmoutWrap
+                    amount = {followings}
+                    type = "followings"
+                />
+            </Link>
+
         </HeadWrap>
 
-        <UserName>{userName}</UserName>
-        <UserId>{"@" + userId}</UserId>
-        <UserMsg>{userMsg}</UserMsg>
-        
+        <UserName>{name}</UserName>
+        <UserId>{`@ ${id}`}</UserId>
+        <UserMsg>{msg}</UserMsg>
+
         <FooterWrap>
             <UserBtnCircle value="chat" />
             <UserButton

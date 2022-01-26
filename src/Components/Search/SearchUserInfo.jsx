@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matchedText }) => {
+const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matchedText, test }) => {
   const prevText = name.slice(0, name.indexOf(matchedText));
   const nextText = name.slice(name.indexOf(matchedText) + matchedText.length, name.length);
 
@@ -40,21 +41,32 @@ const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matched
   }
 
   return (
-    <UserInfoWrap>
-      <ProfileWrap>
-        <Avatar>
-          <Img src={avatar} alt="" />
-        </Avatar>
-        <Info>
-          <Name>
-            {showPrevText(prevText)}
-            <strong>{matchedText}</strong>
-            {showNextText(nextText)}
-          </Name>
-          <Email>{email}</Email>
-        </Info>
-      </ProfileWrap>
-    </UserInfoWrap>
+    <Link to={{
+      pathname: `/profile/${email}`,
+      state: {
+        accountname: email,
+      },
+    }}>
+      <UserInfoWrap>
+        <ProfileWrap>
+          <Avatar>
+            <Img src={avatar} alt="" />
+          </Avatar>
+          <Info>
+            <Name>
+              {name.includes(matchedText) ?
+              <>
+                {showPrevText(prevText)}
+                <strong>{matchedText}</strong>
+                {showNextText(nextText)} 
+              </> : 
+              name}
+            </Name>
+            <Email>{`@ ${email}`}</Email>
+          </Info>
+        </ProfileWrap>
+      </UserInfoWrap>
+    </Link>
   );
 };
 

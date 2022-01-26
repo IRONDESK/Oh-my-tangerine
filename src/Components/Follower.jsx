@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const Follower = ({ imgLink, name, desc, follow }) => {
-  const [followState, setFollowState] = useState(follow);
+const Follower = ({ imgLink, name, intro, isFollow, accountName }) => {
+  const [followState, setFollowState] = useState(isFollow);
 
   const onClickButton = () => {
     if (followState) setFollowState(false);
@@ -10,20 +11,27 @@ const Follower = ({ imgLink, name, desc, follow }) => {
   };
 
   return (
-    <>
     <Container>
-      <Avatar>
-        <AvatarImg src={imgLink} alt="" />
-      </Avatar>
-      <FollowerInfo>
-        <Name>{name}</Name>
-        <Desc>{desc}</Desc>
-      </FollowerInfo>
+      <Link to={{
+        pathname: `/profile/${accountName}`,
+        state: {
+            accountname: accountName,
+          },
+        }}>
+        <ClickWrap>
+          <Avatar>
+            <AvatarImg src={imgLink} alt="" />
+          </Avatar>
+          <FollowerInfo>
+            <Name>{name}</Name>
+            <Desc>{intro}</Desc>
+          </FollowerInfo>
+        </ClickWrap>
+      </Link>
       { followState ?
       <CancelButton onClick={onClickButton}>취소</CancelButton> :
       <FollowButton onClick={onClickButton}>팔로우</FollowButton> }
     </Container>
-    </>
   );
 };
 
@@ -35,6 +43,12 @@ const Container = styled.li`
   margin-bottom: 16px;
 `;
 
+const ClickWrap = styled.div`
+  display: flex;
+  height: 50px;
+  width: 300px;
+`;
+
 const Avatar = styled.a`
   width: 50px;
   height: 50px;
@@ -44,6 +58,7 @@ const Avatar = styled.a`
 const AvatarImg = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 `;
 
 const FollowerInfo = styled.div`
