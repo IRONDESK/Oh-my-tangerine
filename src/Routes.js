@@ -15,6 +15,7 @@ import Resistration from "./pages/Resistration/Resistration";
 import Search from "./pages/Search/Search";
 import LoginEmail from "./pages/Login/LoginEmail";
 import LoginMembership from "./pages/Login/LoginMembership";
+import Followings from "./pages/Followers/Followings";
 
 class Routes extends React.Component {
   render() {
@@ -33,6 +34,8 @@ class Routes extends React.Component {
           <Route exact path="/upload" component={Upload} />
           <Route exact path="/followers" component={Followers} />
             <Route exact path="/followers/:id" component={Followers} />
+          <Route exact path="/followings" component={Followings} />
+            <Route exact path="/followings/:id" component={Followings} />
           <Route exact path="/resistration" component={Resistration} />
           <Route exact path="/search" component={Search} />
           <Route exact path="/login/email" component={LoginEmail} />
