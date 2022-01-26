@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import HeadRightButton from "../../Components/Profile/HeadRightButton";
+import { useHistory } from 'react-router-dom';
 
 function Header({value, checkValue}) {
+    let history = useHistory();
+
     return (
     <HeadMenu>
-        <BackButton href="./" alt="뒤로"/>
+        <BackButton alt="뒤로"onClick={ () => {history.goBack()} } />
         <HeadRightButton type={value} checkValue={checkValue}/>
     </HeadMenu>
     );

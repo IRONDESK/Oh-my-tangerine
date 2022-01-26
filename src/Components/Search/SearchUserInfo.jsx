@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matchedText }) => {
+const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matchedText, test }) => {
   const prevText = name.slice(0, name.indexOf(matchedText));
   const nextText = name.slice(name.indexOf(matchedText) + matchedText.length, name.length);
 
@@ -40,21 +41,32 @@ const UserInfo = ({ avatar="./image/basic-profile-img.png", name, email, matched
   }
 
   return (
-    <UserInfoWrap>
-      <ProfileWrap>
-        <Avatar>
-          <Img src={avatar} alt="" />
-        </Avatar>
-        <Info>
-          <Name>
-            {showPrevText(prevText)}
-            <strong>{matchedText}</strong>
-            {showNextText(nextText)}
-          </Name>
-          <Email>{email}</Email>
-        </Info>
-      </ProfileWrap>
-    </UserInfoWrap>
+    <Link to={{
+      pathname: `/profile/${email}`,
+      state: {
+        accountname: email,
+      },
+    }}>
+      <UserInfoWrap>
+        <ProfileWrap>
+          <Avatar>
+            <Img src={avatar} alt="" />
+          </Avatar>
+          <Info>
+            <Name>
+              {name.includes(matchedText) ?
+              <>
+                {showPrevText(prevText)}
+                <strong>{matchedText}</strong>
+                {showNextText(nextText)} 
+              </> : 
+              name}
+            </Name>
+            <Email>{`@ ${email}`}</Email>
+          </Info>
+        </ProfileWrap>
+      </UserInfoWrap>
+    </Link>
   );
 };
 
@@ -64,6 +76,7 @@ const UserInfoWrap = styled.li`
   height: 42px;
   justify-content: space-between;
   margin-bottom: 12px;
+  cursor: pointer;
 `;
 
 const ProfileWrap = styled.div`
@@ -74,9 +87,10 @@ const Avatar = styled.a`
   width: 42px;
   height: 42px;
   margin-right: 12px;
-`;
-
-const Img = styled.img`
+  `;
+  
+  const Img = styled.img`
+  border-radius: 50%;
   width: 100%;
   height: 100%;
 `;

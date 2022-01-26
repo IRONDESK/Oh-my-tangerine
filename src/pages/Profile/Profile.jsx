@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import store from "../../Store";
 
 import Header from "../../Components/Header/HeaderWithMoreBtn";
 import ProfileInfo from "../../Components/Profile/ProfileInfo";
@@ -7,12 +8,17 @@ import NowSales from "../../Components/Profile/NowSales";
 import Feed from "../../Components/Feed";
 import NavBottom from "../../Components/NavBottom";
 
-const Profile = () => {
+const Profile = ({ location }) => {
+  let accountname = store.getLocalStorage().accountname;
+  if (location.state) {
+    accountname = location.state.accountname;
+  }
+
   return(
     <div>
       <Header value="dropmenu" />
       <MainContainer>
-        <ProfileInfo  />
+        <ProfileInfo accountname={accountname} />
         <NowSales />
         <FeedWrap>
           <Feed />
@@ -20,7 +26,7 @@ const Profile = () => {
           <Feed />
         </FeedWrap>
       </MainContainer>
-      <NavBottom place="profile"/>
+      { location.state ? <NavBottom place="home"/> : <NavBottom place="profile"/> }
     </div>
   );
 };

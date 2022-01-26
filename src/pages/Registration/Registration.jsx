@@ -17,7 +17,7 @@ function uncomma(str) {
   return str.replace(/[^\d]+/g, '');
 }
 
-const Resistration = () => {
+const Registration = () => {
   const [hasData, setHasData] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
@@ -181,4 +181,4 @@ const UploadImageContainer = styled.div`
   }
 `;
 
-export default Resistration;
+export default Registration;
