@@ -1,14 +1,51 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import store from "../Store";
+import axios from 'axios';
 
 const Follower = ({ imgLink, name, intro, isFollow, accountName }) => {
+  const user = store.getLocalStorage().accountname;
   const [followState, setFollowState] = useState(isFollow);
 
+  async function addFollow() {
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const response = await axios(`${url}/profile/${accountName}/follow`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+        },
+    });
+    setFollowState(true);
+  }
+
+  async function removeFollow() {
+      const url = 'http://146.56.183.55:5050';
+      const token = store.getLocalStorage().token;
+      const response = await axios(`${url}/profile/${accountName}/unfollow`, {
+          method: 'DELETE',
+          headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-type': 'application/json',
+          },
+      });
+      setFollowState(false);
+  }
+
   const onClickButton = () => {
-    if (followState) setFollowState(false);
-    else setFollowState(true);
+    if (followState) removeFollow();
+    else addFollow();
   };
+
+  const showButton = () => {
+    if (user === accountName) return null;
+    else {
+      if (followState) return <CancelButton onClick={onClickButton}>취소</CancelButton>;
+      else return <FollowButton onClick={onClickButton}>팔로우</FollowButton>
+    }
+  }
 
   return (
     <Container>
@@ -28,9 +65,7 @@ const Follower = ({ imgLink, name, intro, isFollow, accountName }) => {
           </FollowerInfo>
         </ClickWrap>
       </Link>
-      { followState ?
-      <CancelButton onClick={onClickButton}>취소</CancelButton> :
-      <FollowButton onClick={onClickButton}>팔로우</FollowButton> }
+      { showButton() }
     </Container>
   );
 };
@@ -107,3 +142,4 @@ const CancelButton = styled.button`
 `;
 
 export default Follower;
+

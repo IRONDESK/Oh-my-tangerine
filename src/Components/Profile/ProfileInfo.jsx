@@ -24,6 +24,7 @@ function ProfileInfo ({ accountname }) {
                 'Content-type': 'application/json',
             },
         });
+        setFollowCheck(response.data.profile.isfollow);
         setFollowers(response.data.profile.followerCount);
         setFollowings(response.data.profile.followingCount);
         setName(response.data.profile.username);
@@ -32,10 +33,37 @@ function ProfileInfo ({ accountname }) {
         setImgUrl(response.data.profile.image);
     }
 
+    async function addFollow() {
+        const url = 'http://146.56.183.55:5050';
+        const token = store.getLocalStorage().token;
+        const response = await axios(`${url}/profile/${accountname}/follow`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-type': 'application/json',
+            },
+        });
+        setFollowCheck(true);
+        setFollowers((current) => current + 1);
+    }
+
+    async function removeFollow() {
+        const url = 'http://146.56.183.55:5050';
+        const token = store.getLocalStorage().token;
+        const response = await axios(`${url}/profile/${accountname}/unfollow`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-type': 'application/json',
+            },
+        });
+        setFollowCheck(false);
+        setFollowers((current) => current - 1);
+    }
+
     const followButton = (e) => {
-        e.preventDefault();
-        alert("팔로우 상태 변경");
-        setFollowCheck(!followCheck);
+        if (!followCheck) addFollow();
+        else removeFollow();
     };
 
     useEffect(() => {
@@ -59,7 +87,12 @@ function ProfileInfo ({ accountname }) {
             <ProfileImgWrap>
                 <ProfileImg src={imgUrl} alt="프로필 이미지" />
             </ProfileImgWrap>
-            <Link to="/followers">
+            <Link to={{
+                pathname: `/followings/${accountname}`,
+                state: {
+                    accountname: accountname,
+                },
+            }}>
                 <FollowAmoutWrap
                     amount = {followings}
                     type = "followings"
@@ -78,6 +111,7 @@ function ProfileInfo ({ accountname }) {
                 text={followCheck ? "언팔로우" : "팔로우"}
                 onClick={followButton}
                 checkValue={followCheck}
+                type='button'
             />
             <UserBtnCircle value="share" />
         </FooterWrap>
@@ -164,7 +198,5 @@ const UserMsg = styled.p`
     font-size: 15px;
     line-height: 17px;
 `;
-
-
 
 export default ProfileInfo;
