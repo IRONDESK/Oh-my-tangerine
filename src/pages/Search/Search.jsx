@@ -68,7 +68,12 @@ const Search = () => {
 const Container = styled.section`
 `;
 const UserList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  height: 730px;
   padding: 20px 16px;
+  overflow-y: auto;
 `;
 
 export default Search;

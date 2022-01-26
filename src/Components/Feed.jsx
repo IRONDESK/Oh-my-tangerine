@@ -1,26 +1,51 @@
 import React from "react";
 import styled from "styled-components";
 import UserInfo from "./UserInfo";
+import { Link } from 'react-router-dom';
 
-const Feed = ({text, imgLink="./image/post-img-example.png", likeNum="0", chatNum="0", date="Date Loading"}) => {
+function Feed ({
+  profileImgSrc = "./image/basic-profile-img.png",
+  userName,
+  userAccountId,
+  text,
+  imgLink="./image/post-img-example.png",
+  likeNum="0",
+  chatNum="0",
+  date="Date Loading"
+}) {
   return (
     <Container>
-      <UserInfo />
+      <UserInfo
+        profileImgSrc = {profileImgSrc}
+        userName = {userName}
+        userAccountId = {userAccountId}
+      />
       <FeedContents>
         <FeedText>
           {text}
-          옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다.
-          이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게
-          뛰노는 인생의 힘있다.
         </FeedText>
-        <FeedImage src={imgLink} alt="피드 이미지" />
+        { imgLink !== "" ?
+          <FeedImgWrap>
+            { imgLink.split(",").length > 1 ? 
+              <AmountTag>
+                +{imgLink.split(",").length - 1}
+              </AmountTag>
+            : null }
+            <FeedImg
+              src = {imgLink.split(",")[0]}
+              alt = "게시물 이미지"
+              />
+          </FeedImgWrap>
+            :
+          null
+        }
         <FeedLikeAndChat>
           <LikeButton>
-            <LikeImg src="./image/icon/icon-heart.png" alt="피드 이미지" />
+            <LikeImg src="./image/icon/icon-heart.png" alt="좋아요" />
             <LikeCount>{likeNum}</LikeCount>
           </LikeButton>
           <ChatButton>
-            <ChatImg src="./image/icon/icon-message-circle.png" alt="" />
+            <ChatImg src="./image/icon/icon-message-circle.png" alt="댓글" />
             <ChatCount>{chatNum}</ChatCount>
           </ChatButton>
         </FeedLikeAndChat>
@@ -46,11 +71,32 @@ const FeedText = styled.div`
   margin-bottom: 16px;
 `;
 
-const FeedImage = styled.img`
-  width: 280px;
-  border-radius: 15px;
-  margin-bottom: 12px;
+const FeedImgWrap = styled(Link)`
   cursor: pointer;
+  display: block;
+  position: relative;
+  margin-bottom: 12px;
+  width: 280px;
+  max-height: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+`;
+const AmountTag = styled.span`
+  display: block;
+  position: absolute;
+  bottom: 13px;
+  right: 13px;
+  width: 26px;
+  height: 26px;
+  color: #fff;
+  text-align: center;
+  line-height: 26px;
+  font-size: 13px;
+  background-color: #0000006c;
+  border-radius: 15px;
+`;
+const FeedImg = styled.img`
+  width: calc(100% + 15px);
 `;
 
 const FeedLikeAndChat = styled.div`
