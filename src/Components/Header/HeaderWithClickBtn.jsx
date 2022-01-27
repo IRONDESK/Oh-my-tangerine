@@ -20,7 +20,7 @@ const Header = ({ role, hasData }) => {
       </PrevButton>
       {
       hasData ?
-      <ClickButton type="submit" style={{ backgroundColor: '#F26E22' }} onClick={onClickButton}>{role}</ClickButton> :
+      <ClickButton type="submit" style={{ backgroundColor: '#F26E22' }}>{role}</ClickButton> :
       <ClickButton type="submit" onClick={onClickButton}>{role}</ClickButton>
       }
     </HeaderWrap>
@@ -50,6 +50,9 @@ const ClickButton = styled.button`
   color: #FFFFFF;
   font-size: 14px;
   line-height: 18px;
+  &:active {
+    opacity: 50%;
+  }
 `;
 
 const Img = styled.img`

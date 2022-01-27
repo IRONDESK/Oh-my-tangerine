@@ -41,7 +41,7 @@ const SettingProfileEdit = ({ previewImg, setImgSrc, setPreviewImg, name, setNam
 
   return(
     <EditContainer>
-      <Profile action="">
+      <Profile>
           <UserImgCont>
               <input
                 id="UserImgInput"

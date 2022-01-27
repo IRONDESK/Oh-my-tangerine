@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 
-const Header = ({title = null}) => {
+const Header = memo(({title = null}) => {
   let history = useHistory();
   return (
     <HeaderWrap>
@@ -19,7 +19,7 @@ const Header = ({title = null}) => {
       </MoreButton>
     </HeaderWrap>
   );
-};
+});
 
 const HeaderWrap = styled.header`
   display: flex;

@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react'
 import styled from "styled-components";
 import Header from '../../Components/Header/HeaderWithClickBtn';
+import store from "../../Store";
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function inputNumberFormat(obj) {
   obj = comma(uncomma(obj));
@@ -18,12 +21,59 @@ function uncomma(str) {
 }
 
 const Registration = () => {
+  const history = useHistory();
   const [hasData, setHasData] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [link, setLink] = useState(null);
   const nameRef = useRef(null);
   const priceRef = useRef(null);
   const linkRef = useRef(null);
+
+  async function imageUpload(file) {
+    const url = 'http://146.56.183.55:5050';
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await axios.post(`${url}/image/uploadfile`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    const productImgName = response.data.filename;
+    setImgSrc(productImgName);
+  }
+
+  async function registProduct(e) {
+    e.preventDefault();
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const dataProduct = {
+      product: {
+        "itemName": title,
+        "price": price,
+        "link": link,
+        "itemImage": `${url}/${imgSrc}`,
+      }
+    }
+    const response = await axios.post(`${url}/product`, dataProduct, {
+      // method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+      // data: {
+      //   "product": {
+      //     "itemName": title,
+      //     "price": price,
+      //     "link": link,
+      //     "itemImage": `${url}/${imgSrc}`,
+      //   }
+      // },
+    });
+    history.push("/profile");
+  }
 
   const onLoadImage = (e)=> {
     const fileReader = new FileReader();
@@ -40,6 +90,7 @@ const Registration = () => {
       const previewImgUrl = fileReader.result;
       if (previewImgUrl) setPreviewImg(previewImgUrl);
     };
+    imageUpload(imgTarget);
   };
 
   const preview = () => {
@@ -54,8 +105,20 @@ const Registration = () => {
     else setHasData(false);
   };
 
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value);
+  }
+
+  const onChangePrice = (e) => {
+    setPrice(e.target.value);
+  }
+
+  const onChangeLink = (e) => {
+    setLink(e.target.value);
+  }
+
   return (
-    <ResistrationContainer>
+    <ResistrationContainer onSubmit={registProduct}>
       <Header role={'저장'} hasData={hasData} />
       <fieldset>
         <legend className='sr-only'>add production</legend>
@@ -87,6 +150,7 @@ const Registration = () => {
             minLength={2}
             maxLength={15}
             onInput={checkHasData}
+            onChange={onChangeTitle}
           />
         </div>
         <div className='가격 목록'>
@@ -101,6 +165,7 @@ const Registration = () => {
               const num = inputNumberFormat(e.target.value);
               e.target.value = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }}
+            onChange={onChangePrice}
           />
         </div>
         <div className='판매링크 목록'>
@@ -111,6 +176,7 @@ const Registration = () => {
             type="text"
             placeholder='URL을 입력해 주세요.'
             onInput={checkHasData}
+            onChange={onChangeLink}
           />
         </div>
       </fieldset>

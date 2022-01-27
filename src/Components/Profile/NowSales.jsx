@@ -1,32 +1,48 @@
-import React from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from 'styled-components';
+import store from "../../Store";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import SalesProductInfo from "./SalesProductInfo";
 
-const NowSales = () => {
+const NowSales = memo(({ accountname }) => {
+    const [productList, setProductList] = useState([]);
+
+    async function getProductList() {
+        const url = 'http://146.56.183.55:5050';
+        const token = store.getLocalStorage().token;
+        const response = await axios(`${url}/product/${accountname}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-type': 'application/json',
+            },
+        });
+        console.log(response.data.product);
+        setProductList(response.data.product)
+    }
+
+    useEffect(() => {
+        getProductList();
+    }, []);
     return (
     <Container>
         <Title>판매 중인 상품</Title>
         <ProductContainer>
-            <SalesProductInfo
-                itemImgLink = "/image/product/product-img-1.png"
-                itemName = "애월읍 노지 감귤"
-                itemPrice = "35000"
-            />
-            <SalesProductInfo
-                itemImgLink = "/image/product/product-img-2.jpg"
-                itemName = "애월읍 한라봉 10kg BOX"
-                itemPrice = "45000"
-            />
-            <SalesProductInfo
-                itemImgLink = "/image/product/product-img-3.jpg"
-                itemName = "감귤 파치"
-                itemPrice = "25000"
-            />
+            {productList.map((product) => (
+                <a href={product.link}>
+                    <SalesProductInfo
+                        itemImgLink={product.itemImage}
+                        itemName={product.itemName}
+                        itemPrice={product.price}
+                    />
+                </a>
+            ))}
         </ProductContainer>
     </Container>
 );
-};
+});
 
 const Container = styled.article`
     display: flex;
