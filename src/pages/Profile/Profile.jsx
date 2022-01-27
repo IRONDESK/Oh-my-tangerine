@@ -1,6 +1,7 @@
-import React from "react";
+import React, { memo, useState, useEffect } from "react";
 import styled from 'styled-components';
 import store from "../../Store";
+import axios from 'axios';
 
 import Header from "../../Components/Header/HeaderWithMoreBtn";
 import ProfileInfo from "../../Components/Profile/ProfileInfo";
@@ -8,29 +9,59 @@ import NowSales from "../../Components/Profile/NowSales";
 import Feed from "../../Components/Feed";
 import NavBottom from "../../Components/NavBottom";
 
-const Profile = ({ location }) => {
+const Profile = memo(({ location }) => {
   const user = store.getAccount();
   let accountname = store.getAccount();
   if (location.state) {
     accountname = location.state.accountname;
   }
+  const [feedList, setFeedList] = useState([]);
+
+  async function getFeedList() {
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const response = await axios.get(
+      `${url}/post/${accountname}/userpost`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      },
+    );
+    console.log(response.data.post);
+    setFeedList(response.data.post);
+  }
+
+  useEffect(() => {
+    getFeedList();
+  }, [accountname]);
 
   return(
     <div>
       <Header value="dropmenu" />
       <MainContainer>
         <ProfileInfo accountname={accountname} />
-        <NowSales />
+        <NowSales accountname={accountname}/>
         <FeedWrap>
-          <Feed />
-          <Feed />
-          <Feed />
+          {feedList.map((feed) => (
+            <Feed
+            profileImgSrc={feed.author.image}
+            userName={feed.author.username}
+            userAccountId={feed.author.accountname}
+            text={feed.content}
+            imgLink={feed.image}
+            likeNum={feed.heartCount}
+            chatNum={feed.comments.length}
+            date={(feed.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
+            />
+          ))}
         </FeedWrap>
       </MainContainer>
       { user === accountname ? <NavBottom place="profile"/> : <NavBottom place="home"/> }
     </div>
   );
-};
+});
 
 const MainContainer = styled.main`
   display: flex;

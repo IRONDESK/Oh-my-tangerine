@@ -4,10 +4,13 @@ import axios from 'axios';
 import SettingProfileEdit from "./SettingProfileEdit";
 import NavBottom from "../../Components/NavBottom";
 import Header from "../../Components/Profile/Header";
+import { useHistory } from "react-router-dom";
 
 const Setting = () => {
-  const userInfo = store.getLocalStorage();
+  const userInfo = store.getAccount();
+  const history = useHistory();
 
+  const [isImageUpload, setIsImageUpload] = useState(false);
   const [imgSrc, setImgSrc] = useState([store.getImage()]);
   const [previewImg, setPreviewImg] = useState([store.getImage()]);
   const [name, setName] = useState(store.getUserName());
@@ -17,7 +20,7 @@ const Setting = () => {
   async function getProfileData() {
     const url = 'http://146.56.183.55:5050';
     const token = store.getLocalStorage().token;
-    const response = await axios(`${url}/profile/${userInfo.accountname}`, {
+    const response = await axios(`${url}/profile/${userInfo}`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -32,7 +35,7 @@ const Setting = () => {
   }
 
   async function imageUpload(file) {
-    console.log(file);
+    setIsImageUpload(true);
     const url = 'http://146.56.183.55:5050';
     const formData = new FormData();
     formData.append('image', file);
@@ -49,27 +52,45 @@ const Setting = () => {
     e.preventDefault();
     const url = 'http://146.56.183.55:5050';
     const token = store.getLocalStorage().token;
-    const response = await axios(`${url}/user`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-      data: {
-        "user": {
-          "username": name,
-          "accountname": id,
-          "intro": intro,
-          "image": `${url}/${imgSrc}`,
+    let response;
+    if (!isImageUpload) {
+      response = await axios(`${url}/user`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+        data: {
+          "user": {
+            "username": name,
+            "accountname": id,
+            "intro": intro,
+            "image": `${url}/${imgSrc[0].slice(26)}`,
+          }
         }
-      }
-    });
-    console.log(response.data.user);
-    console.log(store.getLocalStorage());
+      });
+    } else {
+      response = await axios(`${url}/user`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+        data: {
+          "user": {
+            "username": name,
+            "accountname": id,
+            "intro": intro,
+            "image": `${url}/${imgSrc}`,
+          }
+        }
+      });
+    }
     store.setAccount(response.data.user.accountname);
     store.setUserName(response.data.user.username);
     store.setIntro(response.data.user.intro);
-    store.setImage(response.data.user.image);
+    store.setImage(response.data.user.image.slice(26));
+    history.push("/profile");
   }
 
   useEffect(() => {
