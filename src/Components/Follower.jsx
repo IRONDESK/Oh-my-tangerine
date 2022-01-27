@@ -81,7 +81,7 @@ const Container = styled.li`
 const ClickWrap = styled.div`
   display: flex;
   height: 50px;
-  width: 300px;
+  width: 280px;
 `;
 
 const Avatar = styled.a`
