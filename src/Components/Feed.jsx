@@ -4,11 +4,12 @@ import UserInfo from "./UserInfo";
 import { Link } from 'react-router-dom';
 
 function Feed ({
-  profileImgSrc = "./image/basic-profile-img.png",
+  postLink = "",
+  profileImgSrc = "/image/basic-profile-img.png",
   userName,
   userAccountId,
   text,
-  imgLink="./image/post-img-example.png",
+  imgLink="/image/post-img-example.png",
   likeNum="0",
   chatNum="0",
   date="Date Loading"
@@ -25,7 +26,7 @@ function Feed ({
           {text}
         </FeedText>
         { imgLink !== "" ?
-          <FeedImgWrap>
+          <FeedImgWrap to={"/post/" + postLink}>
             { imgLink.split(",").length > 1 ? 
               <AmountTag>
                 +{imgLink.split(",").length - 1}
@@ -41,11 +42,11 @@ function Feed ({
         }
         <FeedLikeAndChat>
           <LikeButton>
-            <LikeImg src="./image/icon/icon-heart.png" alt="좋아요" />
+            <LikeImg src="/image/icon/icon-heart.png" alt="좋아요" />
             <LikeCount>{likeNum}</LikeCount>
           </LikeButton>
           <ChatButton>
-            <ChatImg src="./image/icon/icon-message-circle.png" alt="댓글" />
+            <ChatImg src="/image/icon/icon-message-circle.png" alt="댓글" />
             <ChatCount>{chatNum}</ChatCount>
           </ChatButton>
         </FeedLikeAndChat>

@@ -11,7 +11,7 @@ const Chat = ({ avatar, name, time, content }) => {
           <Time>{time}</Time>
         </UserInfo>
         <MoreButton>
-          <img src="./image/icon/icon-more-vertical.png" alt="" />
+          <img src="/image/icon/icon-more-vertical.png" alt="" />
         </MoreButton>
       </UserInfoWrap>
       <Content>
@@ -36,18 +36,21 @@ const UserInfo = styled.div`
 
 const Avatar = styled.img`
   margin-right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
   cursor: pointer;
-  `;
+`;
   
-  const Name = styled.div`
+const Name = styled.div`
   font-weight: 700;
   font-size: 14px;
   line-height: 18px;
   margin-right: 6px;
   padding-top: 8px;
-  `;
-  
-  const Time = styled.div`
+`;
+
+const Time = styled.div`
   font-size: 10px;
   line-height: 13px;
   padding-top: 10px;

@@ -24,7 +24,6 @@ function Home() {
     .then(res => {
       setGetFeedArray(res.data.posts);
       if (res.data.posts.length > 0) {
-        console.log(getFeedArray)
         sethasFeed(true);
       } else {
         sethasFeed(false);
@@ -45,6 +44,7 @@ function Home() {
         { hasFeed ? 
           getFeedArray.map( (value) => (
             <Feed
+            postLink = {value.id}
             profileImgSrc = {value.author.image}
             userName = {value.author.username}
             userAccountId = {value.author.accountname}

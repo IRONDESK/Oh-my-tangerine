@@ -19,7 +19,7 @@ function UserInfo({
         </Info>
       </ProfileWrap>
       <MoreButton>
-        <Img src="./image/icon/icon-more-vertical.png" alt="" />
+        <Img src="/image/icon/icon-more-vertical.png" alt="" />
       </MoreButton>
     </UserInfoWrap>
     </>
