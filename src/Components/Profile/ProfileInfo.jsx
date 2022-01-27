@@ -7,24 +7,35 @@ import store from "../../Store";
 import axios from 'axios';
 
 function ProfileInfo ({ accountname }) {
-    const user = store.getLocalStorage().accountname;
+    const user = store.getAccount();
     const [followCheck, setFollowCheck] = useState(false);
-    const [followers, setFollowers] = useState(2950);
-    const [followings, setFollowings] = useState(128);
-    const [name, setName] = useState('애월읍 위니브 감귤농장');
+    const [followers, setFollowers] = useState(null);
+    const [followings, setFollowings] = useState(null);
+    const [name, setName] = useState('');
     const [id, setId] = useState(accountname);
-    const [msg, setMsg] = useState('대한민국 감귤 전국 배송, 귤따기 체험, 감귤 농장');
+    const [msg, setMsg] = useState('');
     const [imgUrl, setImgUrl] = useState('/image/basic-profile-img.png');
 
     async function getProfileInfo() {
+        console.log(accountname);
         const url = 'http://146.56.183.55:5050';
         const token = store.getLocalStorage().token;
-        const response = await axios.get(`${url}/profile/${accountname}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-type': 'application/json',
-            },
-        });
+        let response;
+        if (accountname) {
+            response = await axios.get(`${url}/profile/${accountname}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-type': 'application/json',
+                },
+            });
+        } else {
+            response = await axios.get(`${url}/profile/${user}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-type': 'application/json',
+                },
+            });
+        }
         setFollowCheck(response.data.profile.isfollow);
         setFollowers(response.data.profile.followerCount);
         setFollowings(response.data.profile.followingCount);

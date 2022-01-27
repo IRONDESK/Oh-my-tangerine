@@ -12,6 +12,9 @@ function UserButton ({text, onClick, checkValue}) {
     font-size: 14px;
     font-weight: 500;
     border-radius: 30px;
+    &:active {
+        opacity: 50%;
+    }
     `;
 
     return (

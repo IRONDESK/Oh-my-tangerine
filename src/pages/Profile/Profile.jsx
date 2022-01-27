@@ -9,7 +9,8 @@ import Feed from "../../Components/Feed";
 import NavBottom from "../../Components/NavBottom";
 
 const Profile = ({ location }) => {
-  let accountname = store.getLocalStorage().accountname;
+  const user = store.getAccount();
+  let accountname = store.getAccount();
   if (location.state) {
     accountname = location.state.accountname;
   }
@@ -26,7 +27,7 @@ const Profile = ({ location }) => {
           <Feed />
         </FeedWrap>
       </MainContainer>
-      { location.state ? <NavBottom place="home"/> : <NavBottom place="profile"/> }
+      { user === accountname ? <NavBottom place="profile"/> : <NavBottom place="home"/> }
     </div>
   );
 };
