@@ -56,6 +56,8 @@ const Followers = ({ location }) => {
 const Container = styled.section`
   .followers-list {
     padding: 24px 16px;
+    overflow-y: scroll;
+    height: 734px;
   }
 `;
 

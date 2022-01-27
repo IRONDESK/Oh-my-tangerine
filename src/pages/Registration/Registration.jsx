@@ -52,7 +52,7 @@ const Registration = () => {
     const dataProduct = {
       product: {
         "itemName": title,
-        "price": price,
+        "price": Number(price),
         "link": link,
         "itemImage": `${url}/${imgSrc}`,
       }
