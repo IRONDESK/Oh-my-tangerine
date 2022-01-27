@@ -1,17 +1,21 @@
 import React from 'react'
 import styled from 'styled-components';
 
-const UserInfo = () => {
+function UserInfo({
+  profileImgSrc,
+  userName,
+  userAccountId
+}) {
   return (
     <>
     <UserInfoWrap>
       <ProfileWrap>
         <Avatar>
-          <Img src="./image/basic-profile-img.png" alt="" />
+          <Img src={profileImgSrc} alt="프로필 이미지" />
         </Avatar>
         <Info>
-          <Name>애월읍 위니브 감귤농장</Name>
-          <Email>@ weniv_Mandarin</Email>
+          <Name>{userName}</Name>
+          <AccountId>@{userAccountId}</AccountId>
         </Info>
       </ProfileWrap>
       <MoreButton>
@@ -22,7 +26,7 @@ const UserInfo = () => {
   );
 };
 
-const UserInfoWrap = styled.div`
+const UserInfoWrap = styled.article`
   display: flex;
   width: 100%;
   height: 42px;
@@ -30,13 +34,15 @@ const UserInfoWrap = styled.div`
   margin-bottom: 12px;
 `;
 
-const ProfileWrap = styled.div`
+const ProfileWrap = styled.article`
   display: flex;
 `;
 
 const Avatar = styled.a`
   width: 42px;
   height: 42px;
+  border-radius: 100%;
+  overflow: hidden;
   margin-right: 12px;
 `;
 
@@ -45,7 +51,9 @@ const Img = styled.img`
   height: 100%;
 `;
 
-const Info = styled.div`
+const Info = styled.article`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Name = styled.div`
@@ -56,7 +64,7 @@ const Name = styled.div`
   font-size: 14px;
   `;
   
-  const Email = styled.div`
+  const AccountId = styled.article`
   display: flex;
   align-items: center;
   height: 50%;

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
 import axios from "axios";
-import store from "../../Store";
 import LoginProfile from "./LoginProfile";
 
 const LoginMembership = () => {
@@ -39,8 +38,7 @@ const LoginMembership = () => {
     axios.post(url + '/user', data)
       .then(res => {
         console.log('결과', res);
-        store.setLocalStorage(res.data.user);
-        history.push("/home");
+        history.push("/login/email");
       })
       .catch(err => {
         console.log('에러', err);

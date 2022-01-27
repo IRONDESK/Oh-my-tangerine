@@ -1,20 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Feed from "../../Components/Feed";
 import HeaderHome from "../../Components/Home/HeaderHome";
 import NavBottom from "../../Components/NavBottom";
 import { Link } from 'react-router-dom';
 
-const Home = () => {
-  // const [hasFeed, sethasFeed] = useState(true);
+import axios from "axios";
+import store from "../../Store";
+
+function Home() {
   const [hasFeed, sethasFeed] = useState(false);
+  const [getFeedArray, setGetFeedArray] = useState([]);
+
+  function getFeed() {
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    axios.get(`${url}/post/feed`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+        },
+    })
+    .then(res => {
+      setGetFeedArray(res.data.posts);
+      if (res.data.posts.length > 0) {
+        console.log(getFeedArray)
+        sethasFeed(true);
+      } else {
+        sethasFeed(false);
+      }
+    })
+    .catch(err => {
+      console.log('에러', err);
+    });
+  }
+
+  useEffect(() => {
+    getFeed();
+  }, []);
 
   const showFeed = () => {
     return (
       <FeedWrap>
-        <Feed />
-        <Feed />
-        <Feed />
+        { hasFeed ? 
+          getFeedArray.map( (value) => (
+            <Feed
+            profileImgSrc = {value.author.image}
+            userName = {value.author.username}
+            userAccountId = {value.author.accountname}
+            text = {value.content}
+            imgLink = {value.image}
+            likeNum = {value.heartCount}
+            chatNum = {value.commentCount}
+            date = {(value.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
+          />
+          ))
+          :
+          null
+        }
       </FeedWrap>
     );
   };
