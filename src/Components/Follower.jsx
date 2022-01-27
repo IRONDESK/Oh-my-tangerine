@@ -5,7 +5,7 @@ import store from "../Store";
 import axios from 'axios';
 
 const Follower = ({ imgLink, name, intro, isFollow, accountName }) => {
-  const user = store.getLocalStorage().accountname;
+  const user = store.getAccount();
   const [followState, setFollowState] = useState(isFollow);
 
   async function addFollow() {

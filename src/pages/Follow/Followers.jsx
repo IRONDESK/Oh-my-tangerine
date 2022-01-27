@@ -8,7 +8,7 @@ import store from "../../Store";
 import axios from 'axios';
 
 const Followers = ({ location }) => {
-  const user = store.getLocalStorage().accountname;
+  const user = store.getAccount();
   const accountname = location.state.accountname;
   let history = useHistory();
   const [followerList, setFollowerList] = useState([]);
