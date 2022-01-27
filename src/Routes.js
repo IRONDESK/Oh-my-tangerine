@@ -30,7 +30,7 @@ class Routes extends React.Component {
           <Route exact path="/profile" component={Profile} />
             <Route exact path="/profile/:id" component={Profile} />
           <Route exact path="/setting" component={Setting} />
-          <Route exact path="/post" component={Post} />
+          <Route exact path="/post/:id" component={Post} />
           <Route exact path="/upload" component={Upload} />
           <Route exact path="/followers" component={Followers} />
             <Route exact path="/followers/:id" component={Followers} />
