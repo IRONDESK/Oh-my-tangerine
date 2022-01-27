@@ -26,6 +26,10 @@ const LoginEmail = () => {
           alert(res.data.message);
         } else {
           store.setLocalStorage(res.data.user);
+          store.setAccount(res.data.user.accountname);
+          store.setUserName(res.data.user.username);
+          store.setImage(res.data.user.image);
+          store.setIntro(res.data.user.intro);
           history.push("/home");
         };
       })
