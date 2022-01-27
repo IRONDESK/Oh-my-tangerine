@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserBtnCircle from "../../Components/Profile/UserBtnCircle";
@@ -6,7 +6,7 @@ import UserButton from "../../Components/Profile/UserButton";
 import store from "../../Store";
 import axios from 'axios';
 
-function ProfileInfo ({ accountname }) {
+const ProfileInfo = memo(({ accountname }) => {
     const user = store.getAccount();
     const [followCheck, setFollowCheck] = useState(false);
     const [followers, setFollowers] = useState(null);
@@ -147,9 +147,9 @@ function ProfileInfo ({ accountname }) {
         </FooterWrap>
     </UserInfoContainer>
   );
-};
+});
 
-function FollowAmoutWrap ({amount, type}) {
+const FollowAmoutWrap = memo(({amount, type}) => {
     const FollowWrap = styled.article`
         text-align: center;
     `;
@@ -173,7 +173,7 @@ function FollowAmoutWrap ({amount, type}) {
             <TypeWrap>{type}</TypeWrap>
         </FollowWrap>
     );
-}
+});
 
 
 
