@@ -1,36 +1,74 @@
 import React, { useState, useRef } from 'react'
+import { useLocation, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const InputChat = () => {
+import axios from "axios";
+import store from "../../Store";
+
+const InputChat = ({inputText}) => {
   const InputRef = useRef(null);
   const ButtonRef = useRef(null);
   const formRef = useRef(null);
+  const [inputValue, setInputValue] = useState("");
 
   const onChangeInput = (e) => {
+    setInputValue(e.target.value);
     const input = InputRef.current;
     const button = ButtonRef.current;
     if (input.value) button.classList.add('on');
     else button.classList.remove('on')
   };
 
+  function hasInputCheck() {
+    inputText(inputValue);
+  }
+  hasInputCheck();
+
   const onSubmitChat = (e) => {
     const input = InputRef.current;
-    console.log(input.value);
     if (!input.value) {
       e.preventDefault();
       alert('내용이 없습니다!');
       return;
-    } else return;
+    } else {
+      postComment(input.value);
+    };
   };
+
+  const RecentPath = useLocation();
+  const herePostId = RecentPath.pathname.split("/")[2];
+
+  function postComment(input) {
+    const data = {
+      "comment": {
+          "content": input
+      }
+  };
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    axios.post(`${url}/post/${herePostId}/comments`, data, {
+      headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+      },
+    })
+    .then(res => {
+      console.log('결과', res);
+    })
+    .catch(err => {
+      console.log('에러', err);
+    });
+  }
 
   return (
     <InputChatWrap ref={formRef} onSubmit={onSubmitChat}>
-      <Avatar src='./image/basic-profile-img.png' />
+      <Avatar src={store.getLocalStorage().image} />
       <input
         ref={InputRef}
         type="text"
         placeholder='댓글 입력하기...'
         onChange={onChangeInput}
+        value={inputValue}
       />
       <SubmitButton
         ref={ButtonRef}
@@ -64,6 +102,7 @@ const Avatar = styled.img`
   width: 36px;
   height: 36px;
   margin-right: 18px;
+  border-radius: 100%;
 `;
 
 const SubmitButton = styled.button`

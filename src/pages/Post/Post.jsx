@@ -1,37 +1,115 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
+import { useLocation, Link } from 'react-router-dom';
+
 import Header from "../../Components/Header/HeaderWithMoreBtn";
 import Feed from "../../Components/Feed";
-import Chat from "../../Components/Chat";
-import InputChat from "../../Components/InputChat";
+import Comment from "../../Components/Post/Comment";
+import InputComment from "../../Components/Post/InputComment";
 
-const Post = () => {
+import axios from "axios";
+import store from "../../Store";
+
+function Post() {
+  const RecentPath = useLocation();
+  const herePostId = RecentPath.pathname.split("/")[2];
+
+  const [postDetail, setPostDetail] = useState({});
+  const [commentDetail, setCommentDetail] = useState([]);
+  
+  const [postRender, setPostRender] = useState(false);
+  const [commentRender, setCommentRender] = useState(false);
+
+  const url = 'http://146.56.183.55:5050';
+  const token = store.getLocalStorage().token;
+  function getPost() {
+    axios.get(`${url}/post/${herePostId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+        },
+    })
+    .then(res => {
+      setPostDetail(res.data.post);
+      setPostRender(true);
+    })
+    .catch(err => {
+      console.log('에러', err);
+    });
+  }
+  function getComment() {
+    axios.get(`${url}/post/${herePostId}/comments`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+        },
+    })
+    .then(res => {
+      setCommentDetail(res.data.comments);
+      setCommentRender(true);
+    })
+    .catch(err => {
+      console.log('에러', err);
+    });
+  }
+
+  useEffect(() => {
+    getPost();
+    getComment();
+  }, []);
+
+  const [inputText, setInputText] = useState(false);
+  const getHasData = (inputText) => {
+    setInputText(inputText);
+  }
+
   return (
-    <PostContainer>
+    <>
       <Header />
-      <Feed />
-      <ChatList>
-        <Chat
-          avatar={'./image/Ellipse 4.png'}
-          name={'서귀포시 무슨 농장'} time={'5분 전'}
-          content={'게시글 답글 ~~ !! 최고최고'}
+<ContentWrap>
+        {
+          postRender ?
+          <Feed
+          profileImgSrc = {postDetail.author.image}
+          userName = {postDetail.author.username}
+          userAccountId = {postDetail.author.accountname}
+          text = {postDetail.content}
+          imgLink = {postDetail.image}
+          likeNum = {postDetail.heartCount}
+          chatNum = {postDetail.commentCount}
+          date = {(postDetail.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
         />
-        <Chat
-          avatar={'./image/Ellipse 4 (1).png'}
-          name={'감귤러버'}
-          time={'15분 전'}
-          content={'안녕하세요. 사진이 너무 멋있어요. 한라봉 언제 먹을 수 있나요? 기다리기 지쳤어요 땡뻘땡뻘...'}
-        />
-      </ChatList>
-      <InputChat />
-    </PostContainer>
+        :
+        null
+        }
+        <CommentList>
+          {
+            commentRender ?
+            commentDetail.map( (value) => (
+              <Comment
+              avatar={value.author.image}
+              name={value.author.username}
+              time={(value.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일 "+
+              (value.createdAt).slice(11,16)}
+              content={value.content}
+              />
+            ))
+            :
+            null
+          }
+        </CommentList>
+</ContentWrap>
+      <InputComment inputText={getHasData}/>
+    </>
   );
 };
 
-const PostContainer = styled.ul`
+const ContentWrap = styled.main`
+  height: 734px;
+  overflow-y: auto;
 `;
 
-const ChatList = styled.ul`
+const CommentList = styled.ul`
   padding: 20px 16px;
   border-top: 1px solid ${(props) => props.theme.borderColor};
 `;
