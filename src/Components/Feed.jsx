@@ -4,7 +4,7 @@ import UserInfo from "./UserInfo";
 import { Link } from "react-router-dom";
 
 function Feed({
-  postLink = "",
+  postLink = "Contents",
   profileImgSrc = "/image/basic-profile-img.png",
   userName,
   userAccountId,
