@@ -49,7 +49,7 @@ const Comment = ({ id, avatar, name, time, content }) => {
         <ModalOption
           nameArray={["삭제"]}
           linkArray={["#"]}
-          clickArray={[DeleteComment()]}
+          clickArray={[DeleteComment]}
         />
         <MoreButton htmlFor="dropCheck">
           <img src="/image/icon/icon-more-vertical.png" alt="" />
