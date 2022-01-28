@@ -53,6 +53,7 @@ function Home() {
             likeNum = {value.heartCount}
             chatNum = {value.commentCount}
             date = {(value.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
+            isHeart={value.hearted}
           />
           ))
           :

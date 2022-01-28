@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import UserInfo from "./UserInfo";
 import { Link } from "react-router-dom";
+import store from "../Store";
+import axios from 'axios';
 
 function Feed({
   postLink = "",
@@ -13,19 +15,52 @@ function Feed({
   likeNum = "0",
   chatNum = "0",
   date = "Date Loading",
+  isHeart = 'false',
 }) {
-
+  const [heart, setHeart] = useState(isHeart);
+  const [heartCount, setHeartCount] = useState(likeNum);
   const [moveValue, setMoveValue] = useState(0);
+
   function MoveImg(e) {
     setMoveValue(e.target.dataset.order);
   }
-  
+
   function getImgPostLink(postLink) {
     if (postLink !== "") {
       return "/post/" + postLink;
     } else {
       return "#";
     }
+  }
+
+  async function cancelHeart() {
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const response = await axios.delete(
+      `${url}/post/${postLink}/unheart`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      },
+    );
+    setHeart(false);
+    setHeartCount(prev => prev - 1);
+  }
+
+  async function giveHeart() {
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const response = await axios(`${url}/post/${postLink}/heart`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+    });
+    setHeart(true);
+    setHeartCount(prev => prev + 1);
   }
 
   return (
@@ -65,8 +100,12 @@ function Feed({
 </BtnWrap>
         <FeedLikeAndChat>
           <LikeButton>
-            <LikeImg src="/image/icon/icon-heart.png" alt="좋아요" />
-            <LikeCount>{likeNum}</LikeCount>
+            { heart ? 
+              <LikeImg src="/image/icon/icon-heart-active.png" alt="좋아요" onClick={cancelHeart} /> : 
+              <LikeImg src="/image/icon/icon-heart.png" alt="좋아요" onClick={giveHeart} />
+            }
+            
+            <LikeCount>{heartCount}</LikeCount>
           </LikeButton>
           <ChatButton to={getImgPostLink(postLink)}>
             <ChatImg src="/image/icon/icon-message-circle.png" alt="댓글" />

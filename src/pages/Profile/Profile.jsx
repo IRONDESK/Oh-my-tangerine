@@ -31,6 +31,7 @@ const Profile = memo(({ location }) => {
       },
     );
     setFeedList(response.data.post);
+    console.log('response.data.post : ', response.data.post);
   }
 
   useEffect(() => {
@@ -55,6 +56,7 @@ const Profile = memo(({ location }) => {
             likeNum={feed.heartCount}
             chatNum={feed.comments.length}
             date={(feed.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
+            isHeart={feed.hearted}
             />
           ))}
         </FeedWrap>
