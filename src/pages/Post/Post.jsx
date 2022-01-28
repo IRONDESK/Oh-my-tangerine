@@ -87,6 +87,7 @@ function Post() {
             commentRender ?
             commentDetail.map( (value) => (
               <Comment
+              id={value.id}
               avatar={value.author.image}
               name={value.author.username}
               time={(value.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일 "+

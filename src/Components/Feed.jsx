@@ -6,7 +6,7 @@ import store from "../Store";
 import axios from 'axios';
 
 function Feed({
-  postLink = "",
+  postLink = "Contents",
   profileImgSrc = "/image/basic-profile-img.png",
   userName,
   userAccountId,
