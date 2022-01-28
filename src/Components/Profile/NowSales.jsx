@@ -19,7 +19,6 @@ const NowSales = memo(({ accountname }) => {
                 'Content-type': 'application/json',
             },
         });
-        console.log(response.data.product);
         setProductList(response.data.product)
     }
 

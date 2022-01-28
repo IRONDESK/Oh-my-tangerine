@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 function UserInfo({
   profileImgSrc,
@@ -11,7 +12,14 @@ function UserInfo({
     <UserInfoWrap>
       <ProfileWrap>
         <Avatar>
-          <Img src={profileImgSrc} alt="프로필 이미지" />
+          <Link to={{
+            pathname: `/profile/${userAccountId}`,
+            state: {
+                accountname: userAccountId,
+              },
+          }}>
+            <Img src={profileImgSrc} alt="프로필 이미지" />
+          </Link>
         </Avatar>
         <Info>
           <Name>{userName}</Name>
