@@ -1,12 +1,29 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
+import store from "../Store";
+import axios from 'axios';
 
 const UploadContent = ({ hasData }) => {
+  const user = store.getAccount();
+  const [profileimgUrl, setProfileImgUrl] = useState('/image/basic-profile-img.png');
   const [imgSrc, setImgSrc] = useState([]);
   const [previewImg, setPreviewImg] = useState([]);
   const textareaRef = useRef(null);
   const deleteButtonRef = useRef(null);
   const imgAreaRef = useRef(null);
+
+  async function getProfileInfo() {
+    console.log(user);
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const response = await axios.get(`${url}/profile/${user}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-type': 'application/json',
+            },
+        });
+    setProfileImgUrl(response.data.profile.image);
+  }
 
   const onInputTextarea = () => {
     const textarea = textareaRef.current;
@@ -77,9 +94,13 @@ const UploadContent = ({ hasData }) => {
     else imgAreaRef.current.classList.remove('multi');
   };
 
+  useEffect(() => {
+    getProfileInfo();
+  }, []);
+
   return (
     <UploadContentContainer>
-      <Avatar src="./image/basic-profile-img.png"></Avatar>
+      <Avatar src={profileimgUrl}></Avatar>
       <Content>
         <label htmlFor="텍스트 입력"></label>
         <textarea
