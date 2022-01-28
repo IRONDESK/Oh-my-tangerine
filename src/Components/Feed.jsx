@@ -1,51 +1,74 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import UserInfo from "./UserInfo";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-function Feed ({
+function Feed({
   postLink = "",
   profileImgSrc = "/image/basic-profile-img.png",
   userName,
   userAccountId,
   text,
-  imgLink="/image/post-img-example.png",
-  likeNum="0",
-  chatNum="0",
-  date="Date Loading"
+  imgLink = "/image/post-img-example.png",
+  likeNum = "0",
+  chatNum = "0",
+  date = "Date Loading",
 }) {
+
+  const [moveValue, setMoveValue] = useState(0);
+  function MoveImg(e) {
+    setMoveValue(e.target.dataset.order);
+  }
+  
+  function getImgPostLink(postLink) {
+    if (postLink !== "") {
+      return "/post/" + postLink;
+    } else {
+      return "#";
+    }
+  }
+
   return (
     <Container>
       <UserInfo
-        profileImgSrc = {profileImgSrc}
-        userName = {userName}
-        userAccountId = {userAccountId}
+        profileImgSrc={profileImgSrc}
+        userName={userName}
+        userAccountId={userAccountId}
       />
       <FeedContents>
-        <FeedText>
-          {text}
-        </FeedText>
-        { imgLink !== "" ?
-          <FeedImgWrap to={"/post/" + postLink}>
-            { imgLink.split(",").length > 1 ? 
-              <AmountTag>
-                +{imgLink.split(",").length - 1}
-              </AmountTag>
-            : null }
-            <FeedImg
-              src = {imgLink.split(",")[0]}
-              alt = "게시물 이미지"
-              />
+        <FeedText>{text}</FeedText>
+        {imgLink !== "" ? (
+          <FeedImgWrap to={getImgPostLink(postLink)}>
+            <ImgWrap style={{ transform: "translateX(-"+290 * moveValue+"px)", transition: ".5s all"}}>
+              {imgLink.split(",").map((value) => (
+                <FeedImg src={value} alt="게시물 이미지" />
+              ))}
+            </ImgWrap>
           </FeedImgWrap>
-            :
-          null
-        }
+        ) : null}
+<BtnWrap>
+  <ImagesBtnCont>
+          {imgLink.split(",").length > 1 ? (
+            <>
+              {imgLink.split(",").map((value, index) => (
+                <>
+                { index == 0 ?
+                  <MoveInputButton type="radio" name={postLink} id={value} data-order={index} onChange={MoveImg} defaultChecked/>:
+                  <MoveInputButton type="radio" name={postLink} id={value} data-order={index} onChange={MoveImg} />
+                }
+                <MoveLabelButton for={value}/>
+                </>
+              ))}
+            </>
+          ) : null}
+  </ImagesBtnCont>
+</BtnWrap>
         <FeedLikeAndChat>
           <LikeButton>
             <LikeImg src="/image/icon/icon-heart.png" alt="좋아요" />
             <LikeCount>{likeNum}</LikeCount>
           </LikeButton>
-          <ChatButton>
+          <ChatButton to={getImgPostLink(postLink)}>
             <ChatImg src="/image/icon/icon-message-circle.png" alt="댓글" />
             <ChatCount>{chatNum}</ChatCount>
           </ChatButton>
@@ -54,7 +77,7 @@ function Feed ({
       </FeedContents>
     </Container>
   );
-};
+}
 
 const Container = styled.section`
   padding: 0 16px;
@@ -82,22 +105,44 @@ const FeedImgWrap = styled(Link)`
   border-radius: 15px;
   overflow: hidden;
 `;
-const AmountTag = styled.span`
+const BtnWrap = styled.article`
+  position: relative;
+  width: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+const ImagesBtnCont = styled.div`
   display: block;
   position: absolute;
+  width: 100%;
+  height: 32px;
+  left: 50%;
   bottom: 13px;
-  right: 13px;
-  width: 26px;
-  height: 26px;
-  color: #fff;
-  text-align: center;
-  line-height: 26px;
-  font-size: 13px;
-  background-color: #0000006c;
-  border-radius: 15px;
+  transform: translateX(-50%);
+`;
+const MoveInputButton = styled.input`
+  display: none;
+  &:checked + label {
+    background-color: ${(props) => props.theme.mainColor2};
+  }
+`;
+const MoveLabelButton = styled.label`
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 5px;
+  width: 10px;
+  height: 10px;
+  border: #fff;
+  border-radius: 100%;
+  box-shadow: 0 0 4px 1px #0000002a;
+  background-color: #fff;
+`;
+
+const ImgWrap = styled.article`
+  display: flex;
 `;
 const FeedImg = styled.img`
-  width: calc(100% + 15px);
+  width: 290px;
 `;
 
 const FeedLikeAndChat = styled.div`
@@ -110,7 +155,7 @@ const LikeButton = styled.button`
   align-items: center;
 `;
 
-const ChatButton = styled.button`
+const ChatButton = styled(Link)`
   display: flex;
   align-items: center;
 `;
