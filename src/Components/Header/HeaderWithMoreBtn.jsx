@@ -1,9 +1,14 @@
-import React, { memo } from 'react';
+import React, { memo, useState, useRef } from 'react';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 
 const Header = memo(({title = null}) => {
   let history = useHistory();
+
+  const onClickMoreButton = (e) => {
+    console.log(e);
+  };
+
   return (
     <HeaderWrap>
       <LeftContainer>
@@ -15,7 +20,7 @@ const Header = memo(({title = null}) => {
         </PageTitle>
       </LeftContainer>
       <MoreButton type="button">
-        <Img src="/image/icon/icon-more-vertical.png" alt="" />
+        <Img src="/image/icon/icon-more-vertical.png" alt="" onClick={onClickMoreButton}/>
       </MoreButton>
     </HeaderWrap>
   );

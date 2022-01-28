@@ -16,6 +16,7 @@ const Profile = memo(({ location }) => {
     accountname = location.state.accountname;
   }
   const [feedList, setFeedList] = useState([]);
+  const [isModalOn, setIsModalOn] = useState(false);
 
   async function getFeedList() {
     const url = 'http://146.56.183.55:5050';
@@ -29,7 +30,6 @@ const Profile = memo(({ location }) => {
         },
       },
     );
-    console.log(response.data.post);
     setFeedList(response.data.post);
   }
 
@@ -38,14 +38,15 @@ const Profile = memo(({ location }) => {
   }, [accountname]);
 
   return(
-    <div>
-      <Header value="dropmenu" />
+    <ProfileContainer>
+      <Header />
       <MainContainer>
         <ProfileInfo accountname={accountname} />
         <NowSales accountname={accountname}/>
         <FeedWrap>
           {feedList.map((feed) => (
             <Feed
+            postLink = {feed.id}
             profileImgSrc={feed.author.image}
             userName={feed.author.username}
             userAccountId={feed.author.accountname}
@@ -59,11 +60,13 @@ const Profile = memo(({ location }) => {
         </FeedWrap>
       </MainContainer>
       { user === accountname ? <NavBottom place="profile"/> : <NavBottom place="home"/> }
-    </div>
+    </ProfileContainer>
   );
 });
 
-const MainContainer = styled.main`
+const ProfileContainer = styled.main`
+`
+const MainContainer = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
