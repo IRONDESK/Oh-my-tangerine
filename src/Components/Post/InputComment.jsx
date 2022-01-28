@@ -41,7 +41,7 @@ const InputChat = ({inputText}) => {
   function postComment(input) {
     const data = {
       "comment": {
-          "content": inputValue
+          "content": input
       }
   };
     const url = 'http://146.56.183.55:5050';
