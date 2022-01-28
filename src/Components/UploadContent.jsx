@@ -3,7 +3,7 @@ import styled from "styled-components";
 import store from "../Store";
 import axios from 'axios';
 
-const UploadContent = ({ hasData }) => {
+const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
   const user = store.getAccount();
   const [profileimgUrl, setProfileImgUrl] = useState('/image/basic-profile-img.png');
   const [imgSrc, setImgSrc] = useState([]);
@@ -13,19 +13,19 @@ const UploadContent = ({ hasData }) => {
   const imgAreaRef = useRef(null);
 
   async function getProfileInfo() {
-    console.log(user);
     const url = 'http://146.56.183.55:5050';
     const token = store.getLocalStorage().token;
     const response = await axios.get(`${url}/profile/${user}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-type': 'application/json',
-            },
-        });
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+    });
     setProfileImgUrl(response.data.profile.image);
   }
 
-  const onInputTextarea = () => {
+  const onInputTextarea = (e) => {
+    setText(e.target.value);
     const textarea = textareaRef.current;
     textarea.style.height = '1px';
     textarea.style.height = textarea.scrollHeight + 'px';
@@ -34,10 +34,23 @@ const UploadContent = ({ hasData }) => {
     else hasData(false);
   };
 
+  async function imageUpload(file) {
+    const url = 'http://146.56.183.55:5050';
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await axios.post(`${url}/image/uploadfiles`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    const imgName = response.data[0].filename;
+    setImgName(prev => [...prev, `${url}/${imgName}`]);
+  }
+
   const onLoadImage = (e)=> {
+    if (imgSrc.length >= 3) return;
     const fileReader = new FileReader();
     const imgTarget = e.target.files[0];
-    console.log('imgTarget : ', imgTarget);
 
     if (imgTarget) {
       fileReader.readAsDataURL(imgTarget);
@@ -50,14 +63,18 @@ const UploadContent = ({ hasData }) => {
         setPreviewImg([...previewImg, previewImgUrl]);
       }
     };
+
+    imageUpload(imgTarget);
   };
 
   const deleteImg = (i) => {
     const imgArr = imgSrc.filter((v, idx) => idx !== i);
     const imgNameArr = previewImg.filter((v, idx) => idx !== i);
+    const imgSrcArr = imgName.filter((v, idx) => idx !== i);
 
     setImgSrc([...imgArr]);
     setPreviewImg([...imgNameArr]);
+    setImgName([...imgSrcArr]);
 
     onImgNumberChange(imgSrc);
     if (textareaRef.current.value || imgSrc.length - 1) hasData(true);
