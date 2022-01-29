@@ -41,9 +41,8 @@ const UserInfo = ({ profileImgSrc, userName, userAccountId, postLink }) => {
         'Content-type': 'application/json',
       },
     });
-    console.log(res.data.post);
     history.push({
-      pathname: '/uploadRework',
+      pathname: `/uploadRework/${postLink}`,
       state: {
         content: res.data.post.content,
         image: res.data.post.image,

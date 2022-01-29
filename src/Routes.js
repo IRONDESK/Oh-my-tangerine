@@ -34,6 +34,7 @@ class Routes extends React.Component {
           <Route exact path="/post/:id" component={Post} />
           <Route exact path="/upload" component={Upload} />
             <Route exact path="/UploadRework" component={UploadRework} />
+            <Route exact path="/UploadRework/:id" component={UploadRework} />
           <Route exact path="/followers" component={Followers} />
             <Route exact path="/followers/:id" component={Followers} />
           <Route exact path="/followings" component={Followings} />
