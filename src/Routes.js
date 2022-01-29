@@ -10,6 +10,7 @@ import Profile from "./pages/Profile/Profile";
 import Setting from "./pages/Profile/Setting";
 import Post from "./pages/Post/Post";
 import Upload from "./pages/Upload/Upload";
+import UploadRework from "./pages/Upload/UploadRework";
 import Followers from "./pages/Follow/Followers";
 import Registration from "./pages/Registration/Registration";
 import Search from "./pages/Search/Search";
@@ -32,6 +33,7 @@ class Routes extends React.Component {
           <Route exact path="/setting" component={Setting} />
           <Route exact path="/post/:id" component={Post} />
           <Route exact path="/upload" component={Upload} />
+            <Route exact path="/UploadRework" component={UploadRework} />
           <Route exact path="/followers" component={Followers} />
             <Route exact path="/followers/:id" component={Followers} />
           <Route exact path="/followings" component={Followings} />
