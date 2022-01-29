@@ -24,7 +24,7 @@ const NowSales = memo(({ accountname }) => {
 
     useEffect(() => {
         getProductList();
-    }, []);
+    }, [accountname]);
     return (
     <Container>
         <Title>판매 중인 상품</Title>

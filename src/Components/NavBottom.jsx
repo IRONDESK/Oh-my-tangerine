@@ -56,6 +56,7 @@ const Container = styled.ul`
   width: 100%;
   height: 65px;
   position: absolute;
+  z-index: 100;
   bottom: 0;
   padding: 0 12px;
   background-color: #fff;

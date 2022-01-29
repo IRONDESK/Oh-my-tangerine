@@ -1,13 +1,19 @@
 import React, { memo, useState, useRef } from 'react';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
+import ModalOption from "../ModalOption";
 
 const Header = memo(({title = null}) => {
   let history = useHistory();
 
-  const onClickMoreButton = (e) => {
-    console.log(e);
-  };
+  const linkToSetting = () => {
+    history.push('/profile');
+  }
+
+  const logout = () => {
+    localStorage.clear();
+    history.push('/');
+  }
 
   return (
     <HeaderWrap>
@@ -19,8 +25,14 @@ const Header = memo(({title = null}) => {
           { title ? title : !title }
         </PageTitle>
       </LeftContainer>
-      <MoreButton type="button">
-        <Img src="/image/icon/icon-more-vertical.png" alt="" onClick={onClickMoreButton}/>
+      <ModalCheck type="checkbox" id="설정과 로그아웃" hidden />
+      <ModalOption
+        nameArray={["설정 및 개인정보", "로그아웃"]}
+        clickArray={[linkToSetting, logout]}
+        id='설정과 로그아웃'
+      />
+      <MoreButton htmlFor="설정과 로그아웃">
+        <Img src="/image/icon/icon-more-vertical.png" alt="" />
       </MoreButton>
     </HeaderWrap>
   );
@@ -51,9 +63,17 @@ const PageTitle = styled.p`
   margin-left: 11px;
 `;
 
-const MoreButton = styled.button`
+const ModalCheck = styled.input`
+  &:checked + section {
+    transform: translateY(0%);
+  }
+`;
+
+
+const MoreButton = styled.label`
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `;
 
 const Img = styled.img`
