@@ -97,8 +97,9 @@ const UserInfoWrap = styled.div`
   justify-content: space-between;
 `;
 
-const UserInfo = styled.div`
+const UserInfo = styled.section`
   display: flex;
+  align-items: center;
 `;
 
 const Avatar = styled.img`
@@ -114,13 +115,11 @@ const Name = styled.div`
   font-size: 14px;
   line-height: 18px;
   margin-right: 6px;
-  padding-top: 8px;
 `;
 
 const Time = styled.div`
-  font-size: 10px;
+  font-size: 11px;
   line-height: 13px;
-  padding-top: 10px;
   color: ${(props) => props.theme.subFontColor2};
 `;
 

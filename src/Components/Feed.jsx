@@ -223,7 +223,7 @@ const ChatCount = styled.span`
 `;
 
 const FeedDate = styled.div`
-  font-size: 10px;
+  font-size: 11px;
   color: ${(props) => props.theme.subFontColor2};
 `;
 

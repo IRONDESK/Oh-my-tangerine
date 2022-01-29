@@ -37,6 +37,24 @@ const Profile = memo(({ location }) => {
     getFeedList();
   }, [accountname]);
 
+  function convertLocalDate(value) {
+    const now = new Date();
+    const target = new Date(value);
+    const timeDiff = (now-target)/(1000*60); // 분 단위 시간차
+
+    if (timeDiff < 10) {
+      return "방금";
+    } else if (timeDiff < 60) {
+      return Math.floor(timeDiff)+"분 전";
+    } else if (timeDiff < 60 * 24) { 
+      return Math.floor(timeDiff/60)+"시간 전";
+    } else if (timeDiff < 60 * 24 * 3) {
+      return Math.floor(timeDiff/(60*24))+"일 전";
+    } else {
+      return target.toLocaleString().split(".");
+    }
+  };
+
   return(
     <ProfileContainer>
       <Header />
@@ -54,7 +72,7 @@ const Profile = memo(({ location }) => {
             imgLink={feed.image}
             likeNum={feed.heartCount}
             chatNum={feed.comments.length}
-            date={(feed.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
+            date={convertLocalDate(feed.createdAt)}
             isHeart={feed.hearted}
             />
           ))}
