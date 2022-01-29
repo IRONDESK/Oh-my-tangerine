@@ -8,7 +8,7 @@ import ModalOption from "../ModalOption";
 import axios from "axios";
 import store from "../../Store";
 
-const Comment = ({ id, avatar, name, time, content, commentRender, setCommentRender }) => {
+const Comment = ({ id, avatar, name, time, content, commentReRender, setCommentReRender }) => {
   const history = useHistory();
   const RecentPath = useLocation();
   const herePostId = RecentPath.pathname.split("/")[2];
@@ -17,12 +17,12 @@ const Comment = ({ id, avatar, name, time, content, commentRender, setCommentRen
     console.log("그냥 실행됨");
   };
 
-  function DeleteComment() {
+  async function DeleteComment() {
     const url = 'http://146.56.183.55:5050';
     const token = store.getLocalStorage().token;
     const confirmValue = window.confirm("삭제하시겠습니까?");
     if (confirmValue == true) {
-      axios.delete(`${url}/post/${herePostId}/comments/${id}`, {
+      await axios.delete(`${url}/post/${herePostId}/comments/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-type': 'application/json',
@@ -37,7 +37,7 @@ const Comment = ({ id, avatar, name, time, content, commentRender, setCommentRen
     } else {
       return;
     }
-    setCommentRender(!commentRender);
+    window.location.reload();
   };
 
   return (
