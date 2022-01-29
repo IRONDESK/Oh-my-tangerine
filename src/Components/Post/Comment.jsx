@@ -45,7 +45,7 @@ const Comment = ({ id, avatar, name, time, content }) => {
           <Name>{name}</Name>
           <Time>{time}</Time>
         </UserInfo>
-        <ModalCheck type="checkbox" id="dropCheck" hidden/>
+        <ModalCheck type="checkbox" id="dropCheck" hidden />
         <ModalOption
           nameArray={["삭제"]}
           linkArray={["#"]}

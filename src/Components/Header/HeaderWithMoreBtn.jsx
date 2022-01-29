@@ -1,6 +1,7 @@
 import React, { memo, useState, useRef } from 'react';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
+import ModalOption from "../ModalOption";
 
 const Header = memo(({title = null}) => {
   let history = useHistory();
@@ -8,6 +9,13 @@ const Header = memo(({title = null}) => {
   const onClickMoreButton = (e) => {
     console.log(e);
   };
+
+  const linkToProfile = () => {
+    
+  }
+  const logout = () => {
+
+  }
 
   return (
     <HeaderWrap>
@@ -19,7 +27,13 @@ const Header = memo(({title = null}) => {
           { title ? title : !title }
         </PageTitle>
       </LeftContainer>
-      <MoreButton type="button">
+      <ModalCheck type="checkbox" id="dropCheck" hidden />
+      <ModalOption
+        nameArray={["설정 및 개인정보", "로그아웃"]}
+        linkArray={["#", "#"]}
+        clickArray={[linkToProfile, logout]}
+      />
+      <MoreButton type="button" htmlFor="dropCheck">
         <Img src="/image/icon/icon-more-vertical.png" alt="" onClick={onClickMoreButton}/>
       </MoreButton>
     </HeaderWrap>
@@ -51,7 +65,14 @@ const PageTitle = styled.p`
   margin-left: 11px;
 `;
 
-const MoreButton = styled.button`
+const ModalCheck = styled.input`
+  &:checked + section {
+    transform: translateY(0%);
+  }
+`;
+
+
+const MoreButton = styled.label`
   width: 24px;
   height: 24px;
 `;

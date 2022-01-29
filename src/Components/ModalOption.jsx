@@ -35,6 +35,7 @@ function ModalOption ({
 }
 
 const ModalWindow = styled.section`
+    z-index: 10;
     position: absolute;
     padding-bottom: 12px;
     width: 100%;

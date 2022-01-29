@@ -63,7 +63,10 @@ const InputChat = ({inputText}) => {
 
   return (
     <InputChatWrap ref={formRef} onSubmit={onSubmitChat}>
-      <Avatar src={`${url}/${store.getImage()}`} />
+      {store.getImage().slice(0, 4) === 'http' ?
+        <Avatar src={store.getImage()} /> :
+        <Avatar src={`${url}/${store.getImage()}`}
+      />}
       <input
         ref={InputRef}
         type="text"
