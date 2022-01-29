@@ -31,7 +31,6 @@ const Profile = memo(({ location }) => {
       },
     );
     setFeedList(response.data.post);
-    console.log('response.data.post : ', response.data.post);
   }
 
   useEffect(() => {

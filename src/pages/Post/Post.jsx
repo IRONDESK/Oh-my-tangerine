@@ -19,6 +19,7 @@ function Post() {
   
   const [postRender, setPostRender] = useState(false);
   const [commentRender, setCommentRender] = useState(false);
+  const [commentReRender, setCommentReRender] = useState(false);
 
   const url = 'http://146.56.183.55:5050';
   const token = store.getLocalStorage().token;
@@ -87,6 +88,8 @@ function Post() {
             commentRender ?
             commentDetail.map( (value) => (
               <Comment
+              commentReRender={commentReRender}
+              setCommentReRender={setCommentReRender}
               id={value.id}
               avatar={value.author.image}
               name={value.author.username}

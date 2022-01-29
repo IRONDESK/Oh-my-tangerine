@@ -6,6 +6,7 @@ import axios from "axios";
 import store from "../../Store";
 
 const InputChat = ({inputText}) => {
+  const url = 'http://146.56.183.55:5050';
   const InputRef = useRef(null);
   const ButtonRef = useRef(null);
   const formRef = useRef(null);
@@ -62,7 +63,10 @@ const InputChat = ({inputText}) => {
 
   return (
     <InputChatWrap ref={formRef} onSubmit={onSubmitChat}>
-      <Avatar src={store.getLocalStorage().image} />
+      {store.getImage().slice(0, 4) === 'http' ?
+        <Avatar src={store.getImage()} /> :
+        <Avatar src={`${url}/${store.getImage()}`}
+      />}
       <input
         ref={InputRef}
         type="text"

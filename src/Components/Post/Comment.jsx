@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import ModalOption from "../ModalOption";
 
 import axios from "axios";
 import store from "../../Store";
 
-const Comment = ({ id, avatar, name, time, content }) => {
+const Comment = ({ id, avatar, name, time, content, commentReRender, setCommentReRender }) => {
+  const history = useHistory();
   const RecentPath = useLocation();
   const herePostId = RecentPath.pathname.split("/")[2];
 
@@ -15,12 +17,12 @@ const Comment = ({ id, avatar, name, time, content }) => {
     console.log("그냥 실행됨");
   };
 
-  function DeleteComment() {
+  async function DeleteComment() {
     const url = 'http://146.56.183.55:5050';
     const token = store.getLocalStorage().token;
     const confirmValue = window.confirm("삭제하시겠습니까?");
     if (confirmValue == true) {
-      axios.delete(`${url}/post/${herePostId}/comments/${id}`, {
+      await axios.delete(`${url}/post/${herePostId}/comments/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-type': 'application/json',
@@ -35,6 +37,7 @@ const Comment = ({ id, avatar, name, time, content }) => {
     } else {
       return;
     }
+    window.location.reload();
   };
 
   return (
@@ -45,13 +48,13 @@ const Comment = ({ id, avatar, name, time, content }) => {
           <Name>{name}</Name>
           <Time>{time}</Time>
         </UserInfo>
-        <ModalCheck type="checkbox" id="dropCheck" hidden/>
+        <ModalCheck type="checkbox" id="comment" hidden />
         <ModalOption
           nameArray={["삭제"]}
-          linkArray={["#"]}
           clickArray={[DeleteComment]}
+          id='comment'
         />
-        <MoreButton htmlFor="dropCheck">
+        <MoreButton htmlFor="comment">
           <img src="/image/icon/icon-more-vertical.png" alt="" />
         </MoreButton>
       </UserInfoWrap>

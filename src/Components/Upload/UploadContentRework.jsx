@@ -1,16 +1,57 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
-import store from "../Store";
+import store from "../../Store";
 import axios from 'axios';
 
-const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
+const UploadContentRework = ({ hasData, text, setText, imgName, setImgName }) => {
   const user = store.getAccount();
   const [profileimgUrl, setProfileImgUrl] = useState('/image/basic-profile-img.png');
   const [imgSrc, setImgSrc] = useState([]);
   const [previewImg, setPreviewImg] = useState([]);
+  const [content, setContent] = useState(text);
   const textareaRef = useRef(null);
   const deleteButtonRef = useRef(null);
   const imgAreaRef = useRef(null);
+
+  const getUrlExtension = (url) => {
+    return url
+      .split(/[#?]/)[0]
+      .split(".")
+      .pop()
+      .trim();
+  }
+
+  const onImageEdit = async (imgUrl) => {
+    if (!imgUrl) return;
+    var imgExt = getUrlExtension(imgUrl);
+
+    const response = await fetch(imgUrl);
+    const blob = await response.blob();
+    const file = new File([blob], "image." + imgExt, {
+      type: blob.type,
+    });
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    setImgSrc(prev => [...prev, file]);
+    fileReader.onloadend = () => {
+      const fileUrl = fileReader.result;
+      if (fileUrl) {
+        setPreviewImg(prev => [...prev, fileUrl]);
+      }
+    };
+  }
+
+  useEffect(() => {
+    if (!imgName[0]) {
+      setImgName([]);
+      return;
+    }
+    setImgName([...imgName[0].split(',')]);
+    imgName[0].split(',').forEach(img => {
+      onImageEdit(img);
+    })
+  }, []);
+
 
   async function getProfileInfo() {
     const url = 'http://146.56.183.55:5050';
@@ -26,6 +67,7 @@ const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
 
   const onInputTextarea = (e) => {
     setText(e.target.value);
+    setContent(e.target.value);
     const textarea = textareaRef.current;
     textarea.style.height = '1px';
     textarea.style.height = textarea.scrollHeight + 'px';
@@ -98,7 +140,7 @@ const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
               className='delete-button'
               onClick={() => deleteImg(i)}
             >
-              <img src="./image/icon/icon-delete.png" alt="" />
+              <img src="/image/icon/icon-delete.png" alt="" />
             </button>
           </div>
         );
@@ -126,6 +168,7 @@ const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
           onInput={onInputTextarea}
           name="textarea"
           placeholder='게시글 입력하기...'
+          value={content}
         >
         </textarea>
         <div ref={imgAreaRef} className='img-area'>
@@ -226,4 +269,4 @@ const Content = styled.div`
   }
 `;
 
-export default UploadContent;
+export default UploadContentRework;

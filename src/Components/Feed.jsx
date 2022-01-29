@@ -66,6 +66,7 @@ function Feed({
   return (
     <Container>
       <UserInfo
+        postLink={postLink}
         profileImgSrc={profileImgSrc}
         userName={userName}
         userAccountId={userAccountId}
