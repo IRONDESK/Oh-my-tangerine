@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import ModalOption from "../ModalOption";
 
 import axios from "axios";
 import store from "../../Store";
 
-const Comment = ({ id, avatar, name, time, content }) => {
+const Comment = ({ id, avatar, name, time, content, commentRender, setCommentRender }) => {
+  const history = useHistory();
   const RecentPath = useLocation();
   const herePostId = RecentPath.pathname.split("/")[2];
 
@@ -35,6 +37,7 @@ const Comment = ({ id, avatar, name, time, content }) => {
     } else {
       return;
     }
+    setCommentRender(!commentRender);
   };
 
   return (
@@ -45,13 +48,13 @@ const Comment = ({ id, avatar, name, time, content }) => {
           <Name>{name}</Name>
           <Time>{time}</Time>
         </UserInfo>
-        <ModalCheck type="checkbox" id="dropCheck" hidden />
+        <ModalCheck type="checkbox" id="comment" hidden />
         <ModalOption
           nameArray={["삭제"]}
-          linkArray={["#"]}
           clickArray={[DeleteComment]}
+          id='comment'
         />
-        <MoreButton htmlFor="dropCheck">
+        <MoreButton htmlFor="comment">
           <img src="/image/icon/icon-more-vertical.png" alt="" />
         </MoreButton>
       </UserInfoWrap>

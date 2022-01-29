@@ -87,6 +87,8 @@ function Post() {
             commentRender ?
             commentDetail.map( (value) => (
               <Comment
+              commentRender={commentRender}
+              setCommentRender={setCommentRender}
               id={value.id}
               avatar={value.author.image}
               name={value.author.username}

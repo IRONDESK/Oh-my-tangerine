@@ -13,24 +13,22 @@ import styled from "styled-components";
 
 function ModalOption ({
     nameArray = [],
-    linkArray = [],
-    clickArray = [] }) {
+    clickArray = [],
+    id = '' }) {
 
     return (
-    <ModalWindow>
-        <ModalBar htmlFor="dropCheck" />
-        <ul>
-            { nameArray.map( (value, index) => (
-                <li>
-                <OptionBtn onClick={ clickArray[index] }>
-                        <Link to={ linkArray[index] }>
-                            { value }
-                        </Link>
-                </OptionBtn>
-                </li>
-            )) }
-        </ul>
-    </ModalWindow>
+        <ModalWindow>
+            <ModalBar htmlFor={id} />
+            <ul>
+                { nameArray.map( (value, index) => (
+                    <li>
+                    <OptionBtn htmlFor={id} onClick={ clickArray[index] }>
+                        { value }
+                    </OptionBtn>
+                    </li>
+                )) }
+            </ul>
+        </ModalWindow>
     );
 }
 
@@ -51,7 +49,8 @@ const ModalWindow = styled.section`
         width: 100%;
     }
 `;
-const OptionBtn = styled.button`
+const OptionBtn = styled.label`
+    cursor: pointer;
     display: block;
     padding: 14px 26px;
     width: 100%;

@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import ModalOption from "../Components/ModalOption";
+import store from "../Store";
+import axios from 'axios';
 
-function UserInfo({
-  profileImgSrc,
-  userName,
-  userAccountId
-}) {
+const UserInfo = ({ profileImgSrc, userName, userAccountId}) => {
+  const user = store.getAccount();
+
   return (
     <>
     <UserInfoWrap>
@@ -26,7 +27,20 @@ function UserInfo({
           <AccountId>@{userAccountId}</AccountId>
         </Info>
       </ProfileWrap>
-      <MoreButton>
+      <ModalCheck type="checkbox" id="게시글 삭제와 수정" hidden />
+      {user === userAccountId ? 
+        <ModalOption
+          nameArray={["삭제", "수정"]}
+          clickArray={[() => {}, () => {}]}
+          id='게시글 삭제와 수정'
+        /> :
+        <ModalOption
+          nameArray={["신고하기"]}
+          clickArray={[() => {}]}
+          id='게시글 삭제와 수정'
+        />
+    }
+      <MoreButton htmlFor="게시글 삭제와 수정">
         <Img src="/image/icon/icon-more-vertical.png" alt="" />
       </MoreButton>
     </UserInfoWrap>
@@ -80,7 +94,14 @@ const Name = styled.div`
   color: ${(props) => props.theme.subFontColor2};
 `;
 
-const MoreButton = styled.button`
+const ModalCheck = styled.input`
+  &:checked + section {
+    transform: translateY(0%);
+  }
+`;
+
+const MoreButton = styled.label`
+  cursor: pointer;
   width: 18px;
   height: 18px;
 `;

@@ -6,8 +6,13 @@ import ModalOption from "../ModalOption";
 const Header = memo(({title = null}) => {
   let history = useHistory();
 
+  const linkToSetting = () => {
+    history.push('/profile');
+  }
+
   const logout = () => {
     localStorage.clear();
+    history.push('/');
   }
 
   return (
@@ -20,13 +25,13 @@ const Header = memo(({title = null}) => {
           { title ? title : !title }
         </PageTitle>
       </LeftContainer>
-      <ModalCheck type="checkbox" id="dropCheck" hidden />
+      <ModalCheck type="checkbox" id="설정과 로그아웃" hidden />
       <ModalOption
         nameArray={["설정 및 개인정보", "로그아웃"]}
-        linkArray={["/profile", "/"]}
-        clickArray={[() => {}, logout]}
+        clickArray={[linkToSetting, logout]}
+        id='설정과 로그아웃'
       />
-      <MoreButton type="button" htmlFor="dropCheck">
+      <MoreButton htmlFor="설정과 로그아웃">
         <Img src="/image/icon/icon-more-vertical.png" alt="" />
       </MoreButton>
     </HeaderWrap>
@@ -68,6 +73,7 @@ const ModalCheck = styled.input`
 const MoreButton = styled.label`
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `;
 
 const Img = styled.img`
