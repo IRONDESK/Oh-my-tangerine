@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
-import store from "../Store";
+import store from "../../Store";
 import axios from 'axios';
 
-const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
+const UploadContentRework = ({ hasData, text, setText, imgName, setImgName }) => {
   const user = store.getAccount();
   const [profileimgUrl, setProfileImgUrl] = useState('/image/basic-profile-img.png');
   const [imgSrc, setImgSrc] = useState([]);
   const [previewImg, setPreviewImg] = useState([]);
+  const [content, setContent] = useState(text);
   const textareaRef = useRef(null);
   const deleteButtonRef = useRef(null);
   const imgAreaRef = useRef(null);
+  console.log('imgName : ', imgName);
 
   async function getProfileInfo() {
     const url = 'http://146.56.183.55:5050';
@@ -26,6 +28,7 @@ const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
 
   const onInputTextarea = (e) => {
     setText(e.target.value);
+    setContent(e.target.value);
     const textarea = textareaRef.current;
     textarea.style.height = '1px';
     textarea.style.height = textarea.scrollHeight + 'px';
@@ -51,6 +54,7 @@ const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
     if (imgSrc.length >= 3) return;
     const fileReader = new FileReader();
     const imgTarget = e.target.files[0];
+    console.log('imgTarget : ', imgTarget);
 
     if (imgTarget) {
       fileReader.readAsDataURL(imgTarget);
@@ -126,6 +130,7 @@ const UploadContent = ({ hasData, text, setText, imgName, setImgName }) => {
           onInput={onInputTextarea}
           name="textarea"
           placeholder='게시글 입력하기...'
+          value={content}
         >
         </textarea>
         <div ref={imgAreaRef} className='img-area'>
@@ -226,4 +231,4 @@ const Content = styled.div`
   }
 `;
 
-export default UploadContent;
+export default UploadContentRework;

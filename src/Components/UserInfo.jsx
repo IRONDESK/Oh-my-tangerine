@@ -1,12 +1,80 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ModalOption from "../Components/ModalOption";
 import store from "../Store";
 import axios from 'axios';
 
-const UserInfo = ({ profileImgSrc, userName, userAccountId}) => {
+const UserInfo = ({ profileImgSrc, userName, userAccountId, postLink }) => {
   const user = store.getAccount();
+  const history = useHistory();
+
+  const deleteFeed = async () => {
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const confirmValue = window.confirm("삭제하시겠습니까?");
+    if (confirmValue == true) {
+      await axios.delete(`${url}/post/${postLink}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+        },
+      })
+      .then(res => {
+        console.log('결과', res);
+      })
+      .catch(err => {
+        console.log('에러', err);
+      });
+    } else {
+      return;
+    }
+    window.location.reload();
+  }
+
+  const reworkFeed = async () => {
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const res = await axios.get(`${url}/post/${postLink}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+    });
+    console.log(res.data.post);
+    history.push({
+      pathname: '/uploadRework',
+      state: {
+        content: res.data.post.content,
+        image: res.data.post.image,
+        postLink: postLink,
+      },
+    });
+  }
+
+  const reportFeed = async () => {
+    console.log(postLink);
+    const url = 'http://146.56.183.55:5050';
+    const token = store.getLocalStorage().token;
+    const confirmValue = window.confirm("신고하시겠습니까?");
+    if (confirmValue == true) {
+      await axios.post(`${url}/post/${postLink}/report`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+        },
+      })
+      .then(res => {
+        console.log('결과', res);
+      })
+      .catch(err => {
+        console.log('에러', err);
+      });
+    } else {
+      return;
+    }
+    window.alert('신고되었습니다.');
+  }
 
   return (
     <>
@@ -27,20 +95,20 @@ const UserInfo = ({ profileImgSrc, userName, userAccountId}) => {
           <AccountId>@{userAccountId}</AccountId>
         </Info>
       </ProfileWrap>
-      <ModalCheck type="checkbox" id="게시글 삭제와 수정" hidden />
+      <ModalCheck type="checkbox" id={postLink} hidden />
       {user === userAccountId ? 
         <ModalOption
           nameArray={["삭제", "수정"]}
-          clickArray={[() => {}, () => {}]}
-          id='게시글 삭제와 수정'
+          clickArray={[deleteFeed, reworkFeed]}
+          id={postLink}
         /> :
         <ModalOption
           nameArray={["신고하기"]}
-          clickArray={[() => {}]}
-          id='게시글 삭제와 수정'
+          clickArray={[reportFeed]}
+          id={postLink}
         />
     }
-      <MoreButton htmlFor="게시글 삭제와 수정">
+      <MoreButton htmlFor={postLink}>
         <Img src="/image/icon/icon-more-vertical.png" alt="" />
       </MoreButton>
     </UserInfoWrap>
