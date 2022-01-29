@@ -90,6 +90,7 @@ function Post() {
               <Comment
               commentReRender={commentReRender}
               setCommentReRender={setCommentReRender}
+              accountname={value.author.accountname}
               id={value.id}
               avatar={value.author.image}
               name={value.author.username}
