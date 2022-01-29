@@ -6,15 +6,8 @@ import ModalOption from "../ModalOption";
 const Header = memo(({title = null}) => {
   let history = useHistory();
 
-  const onClickMoreButton = (e) => {
-    console.log(e);
-  };
-
-  const linkToProfile = () => {
-    
-  }
   const logout = () => {
-
+    localStorage.clear();
   }
 
   return (
@@ -30,11 +23,11 @@ const Header = memo(({title = null}) => {
       <ModalCheck type="checkbox" id="dropCheck" hidden />
       <ModalOption
         nameArray={["설정 및 개인정보", "로그아웃"]}
-        linkArray={["#", "#"]}
-        clickArray={[linkToProfile, logout]}
+        linkArray={["/profile", "/"]}
+        clickArray={[() => {}, logout]}
       />
       <MoreButton type="button" htmlFor="dropCheck">
-        <Img src="/image/icon/icon-more-vertical.png" alt="" onClick={onClickMoreButton}/>
+        <Img src="/image/icon/icon-more-vertical.png" alt="" />
       </MoreButton>
     </HeaderWrap>
   );
