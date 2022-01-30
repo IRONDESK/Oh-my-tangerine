@@ -39,6 +39,24 @@ function Home() {
   }, []);
 
   const showFeed = () => {
+    function convertLocalDate(value) {
+      const now = new Date();
+      const target = new Date(value);
+      const timeDiff = (now-target)/(1000*60); // 분 단위 시간차
+  
+      if (timeDiff < 10) {
+        return "방금";
+      } else if (timeDiff < 60) {
+        return Math.floor(timeDiff)+"분 전";
+      } else if (timeDiff < 60 * 24) { 
+        return Math.floor(timeDiff/60)+"시간 전";
+      } else if (timeDiff < 60 * 24 * 3) {
+        return Math.floor(timeDiff/(60*24))+"일 전";
+      } else {
+        return target.toLocaleString().split(".");
+      }
+    };
+
     return (
       <FeedWrap>
         { hasFeed ? 
@@ -52,7 +70,7 @@ function Home() {
             imgLink = {value.image}
             likeNum = {value.heartCount}
             chatNum = {value.commentCount}
-            date = {(value.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
+            date = {convertLocalDate(value.createdAt)}
             isHeart={value.hearted}
           />
           ))

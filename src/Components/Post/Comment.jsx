@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import ModalOption from "../ModalOption";
 
 import axios from "axios";
 import store from "../../Store";
 
-const Comment = ({ id, avatar, name, time, content, commentReRender, setCommentReRender }) => {
-  const history = useHistory();
+const Comment = ({ id, avatar, name, time, content, accountname, commentReRender, setCommentReRender }) => {
   const RecentPath = useLocation();
+  const history = useHistory();
   const herePostId = RecentPath.pathname.split("/")[2];
-
-  function onClick() {
-    console.log("그냥 실행됨");
-  };
+  const [checkIdPermission, setCheckIdPermission] = useState(false);
 
   async function DeleteComment() {
     const url = 'http://146.56.183.55:5050';
@@ -40,20 +36,47 @@ const Comment = ({ id, avatar, name, time, content, commentReRender, setCommentR
     window.location.reload();
   };
 
+  function CheckCommentAuthor() {
+    const getLoginId = store.getLocalStorage().accountname;
+    if (getLoginId == accountname) {
+      setCheckIdPermission(true);
+    }
+  };
+  useEffect(() => {
+    CheckCommentAuthor();
+  }, []);
+  
+  function RedirectProfile() {
+    history.push({
+      pathname: `/profile/${accountname}`,
+      state: {
+        accountname: accountname,
+      },
+    });
+  };
+
   return (
     <CommentWarp>
       <UserInfoWrap>
         <UserInfo>
-          <Avatar src={avatar} />
+          <Avatar src={avatar} onClick={RedirectProfile} />
           <Name>{name}</Name>
           <Time>{time}</Time>
         </UserInfo>
         <ModalCheck type="checkbox" id="comment" hidden />
+        {checkIdPermission ? 
         <ModalOption
           nameArray={["삭제"]}
           clickArray={[DeleteComment]}
           id='comment'
         />
+        :
+        <ModalOption
+        nameArray={["프로필 보기"]}
+        clickArray={[RedirectProfile]}
+        id='comment'
+        />
+        }
         <MoreButton htmlFor="comment">
           <img src="/image/icon/icon-more-vertical.png" alt="" />
         </MoreButton>
@@ -74,8 +97,9 @@ const UserInfoWrap = styled.div`
   justify-content: space-between;
 `;
 
-const UserInfo = styled.div`
+const UserInfo = styled.section`
   display: flex;
+  align-items: center;
 `;
 
 const Avatar = styled.img`
@@ -91,13 +115,11 @@ const Name = styled.div`
   font-size: 14px;
   line-height: 18px;
   margin-right: 6px;
-  padding-top: 8px;
 `;
 
 const Time = styled.div`
-  font-size: 10px;
+  font-size: 11px;
   line-height: 13px;
-  padding-top: 10px;
   color: ${(props) => props.theme.subFontColor2};
 `;
 

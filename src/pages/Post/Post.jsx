@@ -64,6 +64,24 @@ function Post() {
     setInputText(inputText);
   }
 
+  function convertLocalDate(value) {
+    const now = new Date();
+    const target = new Date(value);
+    const timeDiff = (now-target)/(1000*60); // 분 단위 시간차
+
+    if (timeDiff < 10) {
+      return "방금";
+    } else if (timeDiff < 60) {
+      return Math.floor(timeDiff)+"분 전";
+    } else if (timeDiff < 60 * 24) { 
+      return Math.floor(timeDiff/60)+"시간 전";
+    } else if (timeDiff < 60 * 24 * 3) {
+      return Math.floor(timeDiff/(60*24))+"일 전";
+    } else {
+      return target.toLocaleString().split(".");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -78,7 +96,7 @@ function Post() {
           imgLink = {postDetail.image}
           likeNum = {postDetail.heartCount}
           chatNum = {postDetail.commentCount}
-          date = {(postDetail.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일"}
+          date = {convertLocalDate(postDetail.createdAt)}
         />
         :
         null
@@ -90,11 +108,11 @@ function Post() {
               <Comment
               commentReRender={commentReRender}
               setCommentReRender={setCommentReRender}
+              accountname={value.author.accountname}
               id={value.id}
               avatar={value.author.image}
               name={value.author.username}
-              time={(value.createdAt).slice(0,10).replace("-", "년 ").replace("-", "월 ")+"일 "+
-              (value.createdAt).slice(11,16)}
+              time={convertLocalDate(value.createdAt)}
               content={value.content}
               />
             ))

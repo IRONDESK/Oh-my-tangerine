@@ -126,10 +126,10 @@ const Container = styled.section`
 `;
 
 const FeedContents = styled.article`
-  padding-left: 54px;
+  margin-left: 54px;
 `;
 
-const FeedText = styled.div`
+const FeedText = styled.article`
   font-size: 14px;
   line-height: 17.53px;
   margin-bottom: 16px;
@@ -138,27 +138,26 @@ const FeedText = styled.div`
 const FeedImgWrap = styled(Link)`
   cursor: pointer;
   display: block;
-  position: relative;
   margin-bottom: 12px;
-  width: 280px;
+  width: 290px;
   max-height: 300px;
   border-radius: 15px;
   overflow: hidden;
 `;
 const BtnWrap = styled.article`
   position: relative;
-  width: 70px;
+  width: 60px;
   left: 50%;
   transform: translateX(-50%);
+
 `;
 const ImagesBtnCont = styled.div`
   display: block;
   position: absolute;
   width: 100%;
   height: 32px;
-  left: 50%;
   bottom: 13px;
-  transform: translateX(-50%);
+  text-align: center;
 `;
 const MoveInputButton = styled.input`
   display: none;
@@ -224,7 +223,7 @@ const ChatCount = styled.span`
 `;
 
 const FeedDate = styled.div`
-  font-size: 10px;
+  font-size: 11px;
   color: ${(props) => props.theme.subFontColor2};
 `;
 
