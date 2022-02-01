@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import axios from "axios";
 import LoginProfile from "./LoginProfile";
@@ -47,6 +47,17 @@ const LoginMembership = () => {
   };
 
   function NextButtonClick(e) {
+    if (
+      EmailValidReq.message === "사용 가능한 이메일 입니다." &&
+      pwdValidReq
+      ) {
+      setClickNext(false);
+    } else {
+      return 
+    };
+  };
+
+  function checkEmail() {
     const emailValidData = {
       "user" : {
       "email" : emailValue,
@@ -63,16 +74,6 @@ const LoginMembership = () => {
       } else {
         setPwdValidReq(false);
       }
-
-      if (
-        EmailValidReq.message === "사용 가능한 이메일 입니다." &&
-        pwdValidReq
-        ) {
-        setClickNext(false);
-      } else {
-        return 
-      };
-
     })
     .catch(err => {
       console.log('에러', err);
@@ -86,6 +87,10 @@ const LoginMembership = () => {
     setPwdValue(e.target.value);
   }
 
+  useEffect(() => {
+    checkEmail();
+  }, [emailValue, pwdValue]);
+  
 
   return (
     <div>
@@ -106,12 +111,15 @@ const LoginMembership = () => {
                     onChange = {emailOnChange}
                     value = {emailValue}
                     style = {
-                      EmailValidReq.message ?
-                      { borderBottom: "1px solid #EB5757" } :
-                      {}
+                      EmailValidReq.message == "잘못된 접근입니다." ?
+                      {  } :
+                      { borderBottom: "1px solid #EB5757" }
                     }
                   />
-                  <WarningMsg>{ EmailValidReq.message }</WarningMsg>
+                  <WarningMsg>{
+                    EmailValidReq.message == "잘못된 접근입니다." ?
+                    null : 
+                    EmailValidReq.message }</WarningMsg>
                   <label htmlFor="setPwd">비밀번호</label>
                   <input
                     type="password"
