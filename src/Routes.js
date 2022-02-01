@@ -15,6 +15,7 @@ import Followers from "./pages/Follow/Followers";
 import Registration from "./pages/Registration/Registration";
 import Search from "./pages/Search/Search";
 import LoginEmail from "./pages/Login/LoginEmail";
+import Splash from "./pages/Login/Splash";
 import LoginMembership from "./pages/Login/LoginMembership";
 import Followings from "./pages/Follow/Followings";
 
@@ -23,7 +24,8 @@ class Routes extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Login} />
+          <Route exact path="/" component={Splash} />
+          <Route exact path="/login" component={Login} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/chat" component={Chat} />
             <Route exact path="/chat/:id" component={ChatRoom} />
